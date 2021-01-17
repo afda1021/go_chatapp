@@ -6,10 +6,10 @@
     </head>
     <body>
         <h2>新規登録</h2>
-        <p>アカウントをしてください。</p>
-        <form action="" method="post">
-            <p>ユーザー名：<input type="text"></p>
-            <p>パスワード：<input type="text"></p>
+        <p>アカウントを登録してください。</p>
+        <form action="/signup_account" method="post">
+            <p>ユーザー名：<input name="name" type="text"></p>
+            <p>パスワード：<input name="password" type="text"></p>
             <input type="submit" value="登録">
         </form>
         <a href="/">戻る</a>
