@@ -5,8 +5,15 @@ import (
 )
 
 type User struct {
+	Id       int
 	Name     string
 	Password string
+}
+
+type Session struct {
+	Id   int
+	Uuid string
+	Name string
 }
 
 //DB接続
@@ -19,7 +26,7 @@ func DbInit() *sql.DB {
 }
 
 //新規ユーザーをDBに保存
-func (user User) Create() (err error) {
+func (user *User) Create() (err error) {
 	db := DbInit()
 	defer db.Close()
 	//既にユーザーが存在しないか確認
@@ -41,5 +48,21 @@ func UserByName(name string) (user User) {
 	defer db.Close()
 
 	db.QueryRow("SELECT name, password FROM users WHERE name = ?", name).Scan(&user.Name, &user.Password)
+	return
+}
+
+func (user *User) CreateSession() (session Session) {
+	db := DbInit()
+	defer db.Close()
+	//セッション作成
+	statement1 := "INSERT INTO sessions (uuid, name) VALUES(?, ?)"
+	stmt1, _ := db.Prepare(statement1)
+	defer stmt1.Close()
+	stmt1.QueryRow(CreateUUID(), user.Name)
+	//セッション取得
+	statement2 := "SELECT uuid FROM sessions WHERE name = ?"
+	stmt2, _ := db.Prepare(statement2)
+	defer stmt2.Close()
+	stmt2.QueryRow(user.Name).Scan(&session.Uuid)
 	return
 }

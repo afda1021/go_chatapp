@@ -11,8 +11,7 @@ func main() {
 	mux.HandleFunc("/login", login)                  //ログイン画面
 	mux.HandleFunc("/signup_account", signupAccount) //新規登録処理
 	mux.HandleFunc("/authenticate", authenticate)    //ログイン処理
-
-	mux.HandleFunc("/room_top", roomTop)
+	mux.HandleFunc("/logout", logout)                //ログアウト処理
 
 	server := &http.Server{
 		Addr:    "localhost:8080",

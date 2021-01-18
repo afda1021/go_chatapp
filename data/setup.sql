@@ -1,7 +1,14 @@
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS sessions;
 
 CREATE TABLE users (
     `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `name`  VARCHAR(100) NOT NULL,
     `password` VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE sessions (
+    `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `uuid` VARCHAR(64) NOT NULL UNIQUE,
+    `name`  VARCHAR(100) NOT NULL
 );
