@@ -2,7 +2,6 @@ package main
 
 import (
 	"chat/data"
-	"fmt"
 	"html/template"
 	"net/http"
 
@@ -46,9 +45,8 @@ func authenticate(w http.ResponseWriter, r *http.Request) {
 	name := r.FormValue("name")
 	password := r.FormValue("password")
 	user := data.UserByName(name) //DBから一致するユーザーを取得
-	fmt.Println(user)
 
-	if password != user.Password {
+	if user.Password != data.Encrypt(password) {
 		http.Redirect(w, r, "/login", 302)
 	} else {
 		http.Redirect(w, r, "/room_top", 302)
