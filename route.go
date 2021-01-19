@@ -4,6 +4,7 @@ import (
 	"chat/data"
 	"html/template"
 	"net/http"
+	"strconv"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -107,5 +108,25 @@ func createRoom(w http.ResponseWriter, r *http.Request) {
 		}
 		room.CreateRoom() //DBにroomを追加
 		http.Redirect(w, r, "/", 302)
+	}
+}
+
+//ルーム画面
+func room(w http.ResponseWriter, r *http.Request) {
+	session := session(w, r) //クッキーと一致するセッションを取得
+
+	if session.Id == 0 {
+		http.Redirect(w, r, "/", 302)
+	} else {
+		query := r.URL.Query()
+		id := query.Get("id") //roomのIdを取得
+		intId, _ := strconv.Atoi(id)
+		room := data.GetRoom(intId) //roomのidと一致するroomを取得
+		type Data struct {
+			Room data.Room
+		}
+		data := Data{Room: room}
+		t := template.Must(template.ParseFiles("templates/room.html"))
+		t.ExecuteTemplate(w, "room.html", data)
 	}
 }
