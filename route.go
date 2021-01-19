@@ -2,7 +2,6 @@ package main
 
 import (
 	"chat/data"
-	"fmt"
 	"html/template"
 	"net/http"
 
@@ -16,8 +15,16 @@ func index(w http.ResponseWriter, r *http.Request) {
 		t := template.Must(template.ParseFiles("templates/index.html"))
 		t.ExecuteTemplate(w, "index.html", nil)
 	} else {
+		user := data.UserByUuid(w, r)
+		rooms := data.GetRooms() //DBからルームを取得
+		type Data struct {
+			User  data.User
+			Rooms []data.Room
+		}
+		data := Data{User: user, Rooms: rooms} //構造体dataにuserとroonsを格納
+
 		t := template.Must(template.ParseFiles("templates/room_top.html"))
-		t.ExecuteTemplate(w, "room_top.html", nil)
+		t.ExecuteTemplate(w, "room_top.html", data)
 	}
 }
 
@@ -57,7 +64,6 @@ func authenticate(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302) //ログイン失敗
 	} else {
 		session := user.CreateSession() //セッション作成
-		fmt.Println(session)
 		//クッキー作成
 		cookie := http.Cookie{
 			Name:     "_cookie",
@@ -76,4 +82,30 @@ func logout(w http.ResponseWriter, r *http.Request) {
 	session.DeleteByUUID() //DBのセッションを削除
 
 	http.Redirect(w, r, "/", 302)
+}
+
+//ルーム作成画面
+func newRoom(w http.ResponseWriter, r *http.Request) {
+	session := session(w, r) //クッキーと一致するセッションを取得
+	if session.Id == 0 {
+		http.Redirect(w, r, "/", 302)
+	} else {
+		t := template.Must(template.ParseFiles("templates/room_new.html"))
+		t.ExecuteTemplate(w, "room_new.html", nil)
+	}
+}
+
+//ルーム作成
+func createRoom(w http.ResponseWriter, r *http.Request) {
+	session := session(w, r) //クッキーと一致するセッションを取得
+
+	if session.Id == 0 {
+		http.Redirect(w, r, "/", 302)
+	} else {
+		room := data.Room{
+			RoomName: r.PostFormValue("room_name"), //入力したルーム名
+		}
+		room.CreateRoom() //DBにroomを追加
+		http.Redirect(w, r, "/", 302)
+	}
 }

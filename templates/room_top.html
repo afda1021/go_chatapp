@@ -6,7 +6,15 @@
     </head>
     <body>
         <h2>Chat Room</h2>
-        <p>ログイン成功！</p>
+        <p>{{ .User.Name }}さん、チャットルームへようこそ！</p>
+        <div>
+            <p><a href="/room/new">ルームを作成</a>または以下のルームに参加してください。</p>
+        </div>
+        {{ range .Rooms }}
+            <div>
+                <p><a href="/room?id={{.Id}}">{{ .RoomName }}</a></p>
+            </div>
+        {{ end }}
         <div>
             <a href="/logout">ログアウト</a>
         </div>

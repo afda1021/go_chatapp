@@ -16,6 +16,11 @@ type Session struct {
 	Name string
 }
 
+type Room struct {
+	Id       int
+	RoomName string
+}
+
 //DB接続
 func DbInit() *sql.DB {
 	db, err := sql.Open("mysql", "user1:0000@/chat")
@@ -64,5 +69,31 @@ func (user *User) CreateSession() (session Session) {
 	stmt2, _ := db.Prepare(statement2)
 	defer stmt2.Close()
 	stmt2.QueryRow(user.Name).Scan(&session.Uuid)
+	return
+}
+
+//DBにroomを追加
+func (room *Room) CreateRoom() {
+	db := DbInit()
+	defer db.Close()
+	//DBにroomを追加
+	statement := "INSERT INTO rooms(room_name) VALUES (?)"
+	stmt, _ := db.Prepare(statement)
+	defer stmt.Close()
+	stmt.QueryRow(room.RoomName)
+}
+
+//DBからroomを取得
+func GetRooms() (rooms []Room) {
+	db := DbInit()
+	defer db.Close()
+	//DBからroomを取得
+	rows, _ := db.Query("SELECT id, room_name FROM rooms")
+	for rows.Next() {
+		room := Room{}
+		rows.Scan(&room.Id, &room.RoomName)
+		rooms = append(rooms, room)
+	}
+	rows.Close()
 	return
 }

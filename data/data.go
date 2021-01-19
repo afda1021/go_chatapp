@@ -5,6 +5,7 @@ import (
 	"crypto/sha1"
 	"fmt"
 	"log"
+	"net/http"
 )
 
 func Encrypt(password string) string {
@@ -30,4 +31,17 @@ func (session *Session) DeleteByUUID() {
 	db := DbInit()
 	defer db.Close()
 	db.Query("DELETE FROM sessions WHERE uuid = ?", session.Uuid)
+}
+
+func UserByUuid(w http.ResponseWriter, r *http.Request) (user User) {
+	cookie, _ := r.Cookie("_cookie")
+	db := DbInit()
+	defer db.Close()
+	//DBのsessionsから一致するユーザーを取得
+	statement := "select id, name from sessions where uuid = ?"
+	stmt, _ := db.Prepare(statement)
+	defer stmt.Close()
+	stmt.QueryRow(cookie.Value).Scan(&user.Id, &user.Name)
+
+	return
 }
