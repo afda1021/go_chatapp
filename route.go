@@ -120,12 +120,18 @@ func room(w http.ResponseWriter, r *http.Request) {
 	} else {
 		query := r.URL.Query()
 		id := query.Get("id") //roomのIdを取得
-		intId, _ := strconv.Atoi(id)
-		room := data.GetRoom(intId) //roomのidと一致するroomを取得
+		intID, _ := strconv.Atoi(id)
+
+		room := data.GetRoom(intID) //ルームidと一致するroomを取得
+		var user data.User
+		user = data.UserByUuid(w, r)   //ユーザー名を取得
+		msgs := data.GetMessage(intID) //ルームidと一致するmessageを全て取得
 		type Data struct {
-			Room data.Room
+			Room     data.Room
+			Name     string
+			Messages []data.Message
 		}
-		data := Data{Room: room}
+		data := Data{Room: room, Name: user.Name, Messages: msgs}
 		t := template.Must(template.ParseFiles("templates/room.html"))
 		t.ExecuteTemplate(w, "room.html", data)
 	}

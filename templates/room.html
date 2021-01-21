@@ -5,7 +5,8 @@
         <title>Chat</title>
     </head>
     <body>
-        <h2>ルーム {{ .Room.RoomName }}</h2>
+        <h2>ルーム {{ .Room.RoomName }} {{ .Name }}</h2>
+        <input id="name" type="hidden" value="{{ .Name }}">
         <!--formはクエリを再指定すると接続が途切れるので使用不可-->
         <div id="chatbox">
             <textarea rows="3"></textarea>
@@ -13,6 +14,9 @@
             <input id="send" type="button" value="送信">
         </div>
         <div id="messages">
+            {{ range .Messages }}
+            <p>{{ .Name }}さん：{{ .Text }}</p>
+            {{ end }}
             <!--ここにmessageを表示-->
         </div>
         <div>
@@ -24,6 +28,7 @@
             $(function(){
                 let socket = null;
                 let msg = $("#chatbox textarea");  // 入力されたメッセージ
+                let name = $("#name")              // 送信者の名前
                 let messages = $("#messages");     // message表示スペース
                 /*クエリを取得*/
                 let query = (new URL(document.location)).searchParams;
@@ -36,7 +41,8 @@
                 document.getElementById("send").onclick = function(){
                     /* socketにデータを送る */
                     socket.send(JSON.stringify({
-                        "RoomId": id,          // メッセージ送信者のルームid
+                        "Name": name.val(),      // 送信者の名前
+                        "RoomId": id,      // メッセージ送信者のルームid
                         "Text": msg.val()  // 入力されたメッセージ
                     }));
                     msg.val("");
@@ -47,7 +53,7 @@
                 socket.onmessage = function(e){
                     let msg = eval("("+e.data+")");                    
                     messages.append(
-                        $("<p>").append(msg.Text)
+                        $("<p>").append(msg.Name + "さん：" + msg.Text)
                     );
                 }
             });

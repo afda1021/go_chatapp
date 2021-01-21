@@ -1,6 +1,7 @@
 package socket
 
 import (
+	"chat/data"
 	"fmt"
 	"log"
 	"net/http"
@@ -16,7 +17,7 @@ var upgrader = &websocket.Upgrader{
 
 /* 全てのクライアントを管理 */
 type chatroom struct {
-	forward chan *Message
+	forward chan *data.Message
 	join    chan *client
 	leave   chan *client
 	clients map[*client]bool
@@ -26,7 +27,7 @@ type chatroom struct {
 func NewChatroom() *chatroom {
 	fmt.Println("chatroom が生成されました。")
 	return &chatroom{
-		forward: make(chan *Message),
+		forward: make(chan *data.Message),
 		join:    make(chan *client),
 		leave:   make(chan *client),
 		clients: make(map[*client]bool),
@@ -46,7 +47,7 @@ func (c *chatroom) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	client := &client{
 		roomId: id, //ルームid(クエリ)
 		socket: socket,
-		send:   make(chan *Message),
+		send:   make(chan *data.Message),
 		room:   c,
 	}
 	// クライアントを入室させる。最後には必ず退室させる。

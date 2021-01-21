@@ -98,11 +98,11 @@ func GetRooms() (rooms []Room) {
 	return
 }
 
-func GetRoom(id int) (room Room) {
+func GetRoom(room_id int) (room Room) {
 	db := DbInit()
 	defer db.Close()
 	//DBからidと一致するroomを取得
-	db.QueryRow("SELECT id, room_name FROM rooms WHERE id = ?", id).
+	db.QueryRow("SELECT id, room_name FROM rooms WHERE id = ?", room_id).
 		Scan(&room.Id, &room.RoomName)
 	return
 }

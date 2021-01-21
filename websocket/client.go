@@ -1,28 +1,28 @@
 package socket
 
 import (
+	"chat/data"
+	"fmt"
+
 	"github.com/gorilla/websocket"
 )
 
 type client struct {
 	roomId string
 	socket *websocket.Conn // websocketへのコネクション
-	send   chan *Message
+	send   chan *data.Message
 	room   *chatroom
-}
-
-type Message struct {
-	RoomId string // メッセージ送信者のルームid
-	Text   string
 }
 
 /* websocketに書き出されたメッセージを読み込む。*/
 func (c *client) read() {
 	for {
-		var msg *Message
+		var msg *data.Message
 		if err := c.socket.ReadJSON(&msg); err == nil {
+			msg.CreateMessage() //DBにメッセージを保存
 			c.room.forward <- msg
 		} else {
+			fmt.Println("ok3")
 			break
 		}
 	}

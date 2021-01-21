@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS sessions;
 DROP TABLE IF EXISTS rooms;
+DROP TABLE IF EXISTS messages;
 
 CREATE TABLE users (
     `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -17,4 +18,11 @@ CREATE TABLE sessions (
 CREATE TABLE rooms (
     `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `room_name`  VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE messages (
+    `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(100),
+    `room_id` INTEGER REFERENCES rooms(id),
+    `text` VARCHAR(255)
 );
