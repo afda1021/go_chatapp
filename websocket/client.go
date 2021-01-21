@@ -5,13 +5,15 @@ import (
 )
 
 type client struct {
+	roomId string
 	socket *websocket.Conn // websocketへのコネクション
 	send   chan *Message
 	room   *chatroom
 }
 
 type Message struct {
-	Text string
+	RoomId string // メッセージ送信者のルームid
+	Text   string
 }
 
 /* websocketに書き出されたメッセージを読み込む。*/

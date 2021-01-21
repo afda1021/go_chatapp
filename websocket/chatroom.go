@@ -39,8 +39,12 @@ func (c *chatroom) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatalln("websocketの開設に失敗しました。:", err)
 	}
+	query := r.URL.Query()
+	id := query.Get("id")
+
 	/* クライアントの生成 */
 	client := &client{
+		roomId: id, //ルームid(クエリ)
 		socket: socket,
 		send:   make(chan *Message),
 		room:   c,
@@ -75,12 +79,14 @@ func (c *chatroom) Run() {
 			fmt.Println("メッセージ受信")
 			// 存在するクライアント全てに対してメッセージを送信する
 			for target := range c.clients {
-				select {
-				case target.send <- msg:
-					fmt.Println("メッセージ送信")
-				default:
-					fmt.Println("メッセージ送信に失敗")
-					delete(c.clients, target)
+				if target.roomId == msg.RoomId { //同じルームのクライアントのみに送信
+					select {
+					case target.send <- msg:
+						fmt.Println("メッセージ送信")
+					default:
+						fmt.Println("メッセージ送信に失敗")
+						delete(c.clients, target)
+					}
 				}
 			}
 		}
