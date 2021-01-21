@@ -5,10 +5,47 @@
         <title>Chat</title>
     </head>
     <body>
-        <h2>Chat Room</h2>
         <h2>ルーム {{ .Room.RoomName }}</h2>
+        <!--formはクエリを再指定すると接続が途切れるので使用不可-->
+        <div id="chatbox">
+            <textarea rows="3"></textarea>
+            <br>
+            <input id="send" type="button" value="送信">
+        </div>
+        <div id="messages">
+            <!--ここにmessageを表示-->
+        </div>
         <div>
             <a href="/">戻る</a>
         </div>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script>
+            $(function(){
+                let socket = null;
+                let msg = $("#chatbox textarea");  // 入力されたメッセージ
+                let messages = $("#messages");     // message表示スペース
+
+                /* socketの開設 */
+                socket = new WebSocket("ws://localhost:8080/ws");
+
+                /* 送信ボタン押下時 */
+                document.getElementById("send").onclick = function(){
+                    /* socketにデータを送る */
+                    socket.send(JSON.stringify({
+                        "Text": msg.val()  // 入力されたメッセージ
+                    }));
+                    return false;
+                };
+
+                /* メッセージ受信時 */
+                socket.onmessage = function(e){
+                    let msg = eval("("+e.data+")");                    
+                    messages.append(
+                        $("<p>").append(msg.Text)
+                    );
+                }
+            });
+        </script>
     </body>
 </html>

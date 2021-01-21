@@ -13,7 +13,7 @@ func Encrypt(password string) string {
 	return cryptext
 }
 
-//ランダムなuuidを作成
+/* ランダムなuuidを作成 */
 func CreateUUID() (uuid string) {
 	u := new([16]byte)        //uは要素数16のバイト配列のポインタ型  &[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
 	_, err := rand.Read(u[:]) //u[:]はランダムな16個の数字 16 <nil>
@@ -38,7 +38,7 @@ func UserByUuid(w http.ResponseWriter, r *http.Request) (user User) {
 	db := DbInit()
 	defer db.Close()
 	//DBのsessionsから一致するユーザーを取得
-	statement := "select id, name from sessions where uuid = ?"
+	statement := "SELECT id, name FROM sessions WHERE uuid = ?"
 	stmt, _ := db.Prepare(statement)
 	defer stmt.Close()
 	stmt.QueryRow(cookie.Value).Scan(&user.Id, &user.Name)

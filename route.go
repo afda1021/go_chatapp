@@ -29,19 +29,19 @@ func index(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//新規登録画面
+/* 新規登録画面 */
 func signup(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("templates/signup.html"))
 	t.ExecuteTemplate(w, "signup.html", nil)
 }
 
-//ログイン画面
+/* ログイン画面 */
 func login(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("templates/login.html"))
 	t.ExecuteTemplate(w, "login.html", nil)
 }
 
-//新規登録処理
+/* 新規登録処理 */
 func signupAccount(w http.ResponseWriter, r *http.Request) {
 	user := &data.User{
 		Name:     r.FormValue("name"),
@@ -55,7 +55,7 @@ func signupAccount(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//ログイン処理
+/* ログイン処理 */
 func authenticate(w http.ResponseWriter, r *http.Request) {
 	name := r.FormValue("name")
 	password := r.FormValue("password")
@@ -76,7 +76,7 @@ func authenticate(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//ログアウト処理
+/* ログアウト処理 */
 func logout(w http.ResponseWriter, r *http.Request) {
 	cookie, _ := r.Cookie("_cookie") //ブラウザのクッキー取得
 	session := data.Session{Uuid: cookie.Value}
@@ -85,7 +85,7 @@ func logout(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", 302)
 }
 
-//ルーム作成画面
+/* ルーム作成画面 */
 func newRoom(w http.ResponseWriter, r *http.Request) {
 	session := session(w, r) //クッキーと一致するセッションを取得
 	if session.Id == 0 {
@@ -96,7 +96,7 @@ func newRoom(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//ルーム作成
+/* ルーム作成 */
 func createRoom(w http.ResponseWriter, r *http.Request) {
 	session := session(w, r) //クッキーと一致するセッションを取得
 
@@ -111,7 +111,7 @@ func createRoom(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//ルーム画面
+/* ルーム画面 */
 func room(w http.ResponseWriter, r *http.Request) {
 	session := session(w, r) //クッキーと一致するセッションを取得
 

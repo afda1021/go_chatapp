@@ -21,7 +21,7 @@ type Room struct {
 	RoomName string
 }
 
-//DB接続
+/* DB接続 */
 func DbInit() *sql.DB {
 	db, err := sql.Open("mysql", "user1:0000@/chat")
 	if err != nil {
@@ -30,7 +30,7 @@ func DbInit() *sql.DB {
 	return db
 }
 
-//新規ユーザーをDBに保存
+/* 新規ユーザーをDBに保存 */
 func (user *User) Create() (err error) {
 	db := DbInit()
 	defer db.Close()
@@ -47,7 +47,7 @@ func (user *User) Create() (err error) {
 	}
 }
 
-//DBからユーザー名が一致するユーザーを取得
+/* DBからユーザー名が一致するユーザーを取得 */
 func UserByName(name string) (user User) {
 	db := DbInit()
 	defer db.Close()
@@ -72,7 +72,7 @@ func (user *User) CreateSession() (session Session) {
 	return
 }
 
-//DBにroomを追加
+/* DBにroomを追加 */
 func (room *Room) CreateRoom() {
 	db := DbInit()
 	defer db.Close()
@@ -83,7 +83,7 @@ func (room *Room) CreateRoom() {
 	stmt.QueryRow(room.RoomName)
 }
 
-//DBからroomを取得
+/* DBからroomを取得 */
 func GetRooms() (rooms []Room) {
 	db := DbInit()
 	defer db.Close()

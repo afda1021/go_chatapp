@@ -1,6 +1,9 @@
 package main
 
-import "net/http"
+import (
+	socket "chat/websocket"
+	"net/http"
+)
 
 func main() {
 	mux := http.NewServeMux()
@@ -16,6 +19,8 @@ func main() {
 	mux.HandleFunc("/room/new", newRoom)       //ルーム作成画面
 	mux.HandleFunc("/room/create", createRoom) //ルーム作成
 	mux.HandleFunc("/room", room)              //ルーム画面
+
+	mux.HandleFunc("/ws", socket.ServeHTTP)
 
 	server := &http.Server{
 		Addr:    "localhost:8080",
