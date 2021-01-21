@@ -20,7 +20,9 @@ func main() {
 	mux.HandleFunc("/room/create", createRoom) //ルーム作成
 	mux.HandleFunc("/room", room)              //ルーム画面
 
-	mux.HandleFunc("/ws", socket.ServeHTTP)
+	chatroom := socket.NewChatroom() // チャットルームを作成
+	mux.HandleFunc("/ws", chatroom.ServeHTTP)
+	go chatroom.Run() // チャットルームを起動する
 
 	server := &http.Server{
 		Addr:    "localhost:8080",

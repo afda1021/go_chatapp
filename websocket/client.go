@@ -7,6 +7,7 @@ import (
 type client struct {
 	socket *websocket.Conn // websocketへのコネクション
 	send   chan *Message
+	room   *chatroom
 }
 
 type Message struct {
@@ -18,7 +19,7 @@ func (c *client) read() {
 	for {
 		var msg *Message
 		if err := c.socket.ReadJSON(&msg); err == nil {
-			c.send <- msg
+			c.room.forward <- msg
 		} else {
 			break
 		}
