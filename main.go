@@ -7,6 +7,8 @@ import (
 
 func main() {
 	mux := http.NewServeMux()
+	files := http.FileServer(http.Dir("public"))
+	mux.Handle("/static/", http.StripPrefix("/static/", files)) ///static/をhttp.FileServer()が捜索するURLから取り除
 
 	mux.HandleFunc("/", index)
 
