@@ -3,15 +3,21 @@
     <head>
         <meta charset="utf-8">
         <title>Chat</title>
+        <link href="/static/css/style.css" rel="stylesheet">
     </head>
     <body>
-        <h2>ログイン</h2>
-        <p>ユーザー名とパスワードを入力してください。</p>
-        <form action="/authenticate" method="post">
-            <p>ユーザー名：<input name="name" type="text"></p>
-            <p>パスワード：<input name="password" type="text"></p>
-            <input type="submit" value="ログイン">
-        </form>
-        <a href="/">戻る</a>
+        <div class="title">
+            <h1>Chat Room</h1>
+        </div>
+        <div class="account">
+            <p class="main-title">ログイン</p>
+            <p>ユーザー名とパスワードを入力してください。</p>
+            <form action="/authenticate" method="post" class="form_account">
+                <p>ユーザー名：<input name="name" class="input" type="text"></p>
+                <p>パスワード：<input name="password" class="input" type="text"></p>
+                <input type="submit" class="w-50" value="ログイン">
+            </form>
+            <a href="/" class="to_top">戻る</a>
+        </div>
     </body>
 </html>

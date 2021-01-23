@@ -1,0 +1,116 @@
+/* 画面全体に関する設定 */
+body {
+    font: 14px;
+}
+a {
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+}
+a::after {
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: #333;
+    transform: scale(0, 1);
+    transform-origin: left top;
+    transition: transform .3s;
+}
+div {
+    margin: 20px 0px;
+}
+
+/* index.htmlに関する設定 */
+.title{
+    margin: 20px;
+    font-family: serif;
+    position: relative;
+    padding: 1em .5rem;
+}
+.title h1{
+    text-shadow: 3px 3px 4px rgba(0,0,0,0.3);
+}
+.title:after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    content: '';
+    border-radius: 3px;
+    background-image: black;
+}
+.intro{
+    text-align: center;
+    font-family: serif;
+    margin-top: 8em;
+}
+.intro h2{
+    font-size: 3em;
+}
+.intro h3{
+    margin-top: .7em;
+    font-size: 2em;
+    color: rgb(104, 103, 103);
+}
+.account_info{
+    text-align: center ;  
+    margin: 0 auto ;
+    width: 55em;
+}
+.account_info h3{
+    text-align: center;
+    color: rgb(100, 99, 99);
+    font-size: 2em;
+    margin-top:2em;
+}
+.home a {
+    color: black;
+    font-size: 2.5em;
+    letter-spacing: 7px;
+    font-weight: bold;
+    padding: .4rem 1rem;
+    border: 2px solid black;
+    border-radius: 4px;
+    width: 20em;
+}
+
+/* 新規登録、ログイン画面 */
+.account{
+    /*background-color: rgb(202, 244, 250);*/
+    text-align: center;
+}
+.main-title{
+    margin-top: 2em;
+    font-size: 40px;
+}
+.w-50{
+    margin-top: 45px;
+    font-size: 1.3em;
+    width: 19em;
+    line-height: 1.25;
+    color: black;
+    background-color: white;
+    border: solid 3px #67c5ff;
+    border-radius: 8px;
+}
+.form_account{
+    font-family: serif;
+    text-align: center;
+    font-size: 25px;
+    margin-top: 40px;
+    line-height: 1.5;
+}
+.form_account input{
+    font-size: 22px;
+    width: 28em;
+}
+.to_top{
+    margin-top: 100px;
+    font-size: 1.7em;
+    margin-right: 19em;
+}
+
