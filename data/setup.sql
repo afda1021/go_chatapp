@@ -24,5 +24,7 @@ CREATE TABLE messages (
     `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(100),
     `room_id` INTEGER REFERENCES rooms(id),
-    `text` VARCHAR(255)
+    `text` VARCHAR(255),
+    `date` VARCHAR(255),
+    `time` VARCHAR(255)
 );

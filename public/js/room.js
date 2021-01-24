@@ -21,10 +21,33 @@ $(function(){
             return false;
         }
         /* socketにデータを送る */
+        const newDate = new Date();
+        let year = newDate.getFullYear();
+        let month = newDate.getMonth() + 1;
+        let date = newDate.getDate();
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (date < 10) {
+            date = "0" + date;
+        }
+        let dateTime = year + "/" + month + "/" + date;
+
+        let hour = newDate.getHours();
+        let minutes = newDate.getMinutes();
+        if (hour < 10) {
+            hour = "0" + hour;
+        }
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+        let time = hour + ":" + minutes;
         socket.send(JSON.stringify({
             "Name": name.val(),      // 送信者の名前
             "RoomId": roomId,      // メッセージ送信者のルームid
-            "Text": msg.val()  // 入力されたメッセージ
+            "Text": msg.val(), // 入力されたメッセージ
+            "date": dateTime,
+            "time": time
         }));
         msg.val("");
         /* textareaの高さを元に戻す */
@@ -40,12 +63,12 @@ $(function(){
         let msg = eval("("+e.data+")");
         if (name.val() == msg.Name) { //自分の名前と投稿者名が一致する場合
             messages.append(`<div id=${id+"msgbox"} class="my-msgbox"></div>`);
-            $(`#${id+"msgbox"}`).append(`<p>` + msg.Name + "さん(2021/01/23 14:56)" + `</p>`);         
+            $(`#${id+"msgbox"}`).append(`<p>` + msg.Name + "さん -" + msg.Time + `</p>`);         
             $(`#${id+"msgbox"}`).append(`<div id=${id+"msg"} class="msg"></div>`);
             $(`#${id+"msg"}`).append(`<p>` + msg.Text + `</p>`);
         }else{
             messages.append(`<div id=${id+"msgbox"} class="msgbox"></div>`);
-            $(`#${id+"msgbox"}`).append(`<p>` + msg.Name + "さん(2021/01/23 14:56)" + `</p>`);         
+            $(`#${id+"msgbox"}`).append(`<p>` + msg.Name + "さん -" + msg.Time + `</p>`);         
             $(`#${id+"msgbox"}`).append(`<div id=${id+"msg"} class="msg"></div>`);
             $(`#${id+"msg"}`).append(`<p>` + msg.Text + `</p>`);
         }
@@ -65,4 +88,15 @@ $(function(){
     textarea.attr("rows", 1).on("input", function() {
         $(this).height(0).innerHeight(this.scrollHeight);
     });
+    /* 日付の表示 */
+    let dates = document.querySelectorAll(".date");
+    let dt = "2006/01/23";
+    for (let i=0; i<dates.length; i++){
+        if (dt != dates[i].value) {
+            let dtId = dates[i].id;
+            document.getElementById("dt-" + dtId).classList.remove("dt-inv");
+            document.getElementById("dt-" + dtId).classList.add("dt-vis");
+        }
+        dt = dates[i].value;
+    }
 });

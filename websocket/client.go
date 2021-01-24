@@ -19,10 +19,10 @@ func (c *client) read() {
 	for {
 		var msg *data.Message
 		if err := c.socket.ReadJSON(&msg); err == nil {
+			fmt.Println(msg.Date)
 			msg.CreateMessage() //DBにメッセージを保存
 			c.room.forward <- msg
 		} else {
-			fmt.Println("ok3")
 			break
 		}
 	}

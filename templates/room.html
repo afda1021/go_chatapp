@@ -12,9 +12,11 @@
         <input id="name" type="hidden" value="{{ .Name }}">
         <div class="msgs">
             {{ range .Messages }}
+            <input id="{{.Id}}" class="date" type="hidden" value="{{ .Date }}">
+            <p id="dt-{{.Id}}" class="dt-inv">{{ .Date }}</p>
             <div id="div-{{.Id}}" class="msgbox">
                 <input id="{{.Id}}" class="msg-name" type="hidden" value="{{ .Name }}">
-                <p>{{ .Name }}さん(14:56)</p>
+                <p>{{ .Name }}さん -{{ .Time }}</p>
                 <div class="msg">
                     <p>{{ .Text }}</p>
                 </div>
