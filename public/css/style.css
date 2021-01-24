@@ -114,3 +114,59 @@ div {
     margin-right: 19em;
 }
 
+/* チャットルーム画面（room.html）に関する設定 */
+.room-title{
+    text-align: center;
+    font-family: serif;
+    background-color: #EEEEEE;
+}
+
+.msgs{
+    margin: auto;
+}
+.msgs .msgbox .msg{
+    margin: 0 auto 0 10%;
+    width: fit-content;
+    max-width: 50%;
+    /* border: solid 2px #67c5ff; */
+    border-radius: 5px;
+    background: #DDDDDD;
+}
+.msgs .my-msgbox .msg{
+    margin: 0 10% 0 auto;
+    width: fit-content;
+    max-width: 50%;
+    /* border: solid 2px #67c5ff; */
+    border-radius: 5px;
+    background: #92D5FF;
+}
+.msgbox > p{
+    text-align: left;
+    margin: 2em auto 0 10%;
+}
+.my-msgbox > p{
+    text-align: right;
+    margin: 2em 10% 0 auto;
+}
+.msg > p{
+    margin: 0.2em 0.8em 0.2em 0.8em;
+    padding: 0.2em 0 0.2em 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+#chatbox > textarea{
+    display: inline-block;
+    float: left;
+    margin-left: 10%;
+    width: 73%;
+    line-height: 20px;
+    max-height: 120px;
+}
+#send{
+    display: inline-block;
+    float: left;
+}
+.back{
+    clear: left;
+}

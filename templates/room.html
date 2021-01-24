@@ -3,25 +3,37 @@
     <head>
         <meta charset="utf-8">
         <title>Chat</title>
+        <link href="/static/css/style.css" rel="stylesheet">
     </head>
     <body>
-        <h2>ルーム {{ .Room.RoomName }} {{ .Name }}</h2>
-        <input id="name" type="hidden" value="{{ .Name }}">
-        <!--formはクエリを再指定すると接続が途切れるので使用不可-->
-        <div id="chatbox">
-            <textarea rows="3"></textarea>
-            <br>
-            <input id="send" type="button" value="送信">
+        <div class="room-title">
+            <h2>{{ .Room.RoomName }}</h2>
         </div>
-        <div id="messages">
+        <input id="name" type="hidden" value="{{ .Name }}">
+        <div class="msgs">
             {{ range .Messages }}
-            <p>{{ .Name }}さん：{{ .Text }}</p>
+            <div id="div-{{.Id}}" class="msgbox">
+                <input id="{{.Id}}" class="msg-name" type="hidden" value="{{ .Name }}">
+                <p>{{ .Name }}さん(14:56)</p>
+                <div class="msg">
+                    <p>{{ .Text }}</p>
+                </div>
+            </div>
             {{ end }}
+        </div>
+        <div id="msgs" class="msgs">
             <!--ここにmessageを表示-->
         </div>
-        <div>
+
+        <!--formはクエリを再指定すると接続が途切れるので使用不可-->
+        <div id="chatbox">
+            <textarea rows="1"></textarea>
+            <input id="send" type="button" value="送信">
+        </div>
+        <div class="back">
             <a href="/">戻る</a>
         </div>
+        <br><br>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="/static/js/room.js"></script>
