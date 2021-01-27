@@ -1,28 +1,19 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-        <meta charset="utf-8">
-        <title>Chat</title>
-        <link href="/static/css/style.css" rel="stylesheet">
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    </head>
-    <body>
-        <div class="home">
-            <div class="title">
-                <h1>Chat Room</h1>
-            </div>
-            <div class="intro">
-                <h2>Chat Roomへようこそ！</h2>
-                <h3>サービスのご利用には、アカウントが必要となります</h3><br>
-            </div>
-            <div class="account_info">
-                <h3>アカウント未登録の方はこちら</h3>
-                <p><a href="/signup">新規登録</a></p>
-                <br>
-                <h3>アカウントをお持ちの方はこちら</h3>
-                <p><a href="/login">ログイン</a></p>
-                <br><br>
-            </div>
+{{ define "content" }}
+    <div class="home">
+        <div class="title">
+            <h1>Chat Room</h1>
         </div>
-    </body>
-</html>
+        <div class="intro">
+            <h2>Chat Roomへようこそ！</h2>
+            <h3>サービスのご利用には、アカウントが必要となります</h3><br>
+        </div>
+        <div class="account_info">
+            <h3>アカウント未登録の方はこちら</h3>
+            <p><a href="/signup">新規登録</a></p>
+            <br>
+            <h3>アカウントをお持ちの方はこちら</h3>
+            <p><a href="/login">ログイン</a></p>
+            <br><br>
+        </div>
+    </div>
+{{ end }}

@@ -1,42 +1,34 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-        <meta charset="utf-8">
-        <title>Chat</title>
-        <link href="/static/css/style.css" rel="stylesheet">
-    </head>
-    <body>
-        <div class="room-title">
-            <h2>{{ .Room.RoomName }}</h2>
-        </div>
-        <input id="name" type="hidden" value="{{ .Name }}">
-        <div class="msgs">
-            {{ range .Messages }}
-            <input id="{{.Id}}" class="date" type="hidden" value="{{ .Date }}">
-            <p id="dt-{{.Id}}" class="dt-inv">{{ .Date }}</p>
-            <div id="div-{{.Id}}" class="msgbox">
-                <input id="{{.Id}}" class="msg-name" type="hidden" value="{{ .Name }}">
-                <p>{{ .Name }}さん -{{ .Time }}</p>
-                <div class="msg">
-                    <p>{{ .Text }}</p>
-                </div>
+{{ define "content"}}
+    <div class="room-title">
+        <h2>{{ .Room.RoomName }}</h2>
+    </div>
+    <input id="name" type="hidden" value="{{ .Name }}">
+    <div class="msgs">
+        {{ range .Messages }}
+        <input id="{{.Id}}" class="date" type="hidden" value="{{ .Date }}">
+        <p id="dt-{{.Id}}" class="dt-inv">{{ .Date }}</p>
+        <div id="div-{{.Id}}" class="msgbox">
+            <input id="{{.Id}}" class="msg-name" type="hidden" value="{{ .Name }}">
+            <p>{{ .Name }}さん -{{ .Time }}</p>
+            <div class="msg">
+                <p>{{ .Text }}</p>
             </div>
-            {{ end }}
         </div>
-        <div id="msgs" class="msgs">
-            <!--ここにmessageを表示-->
-        </div>
+        {{ end }}
+    </div>
+    <div id="msgs" class="msgs">
+        <!--ここにmessageを表示-->
+    </div>
 
-        <!--formはクエリを再指定すると接続が途切れるので使用不可-->
-        <div id="chatbox">
-            <textarea rows="1"></textarea>
-            <input id="send" type="button" value="送信">
-        </div>
-        <br>
-        <a href="/" class="back">戻る</a>
-        <br><br>
+    <!--formはクエリを再指定すると接続が途切れるので使用不可-->
+    <div id="chatbox">
+        <textarea rows="1"></textarea>
+        <input id="send" type="button" value="送信">
+    </div>
+    <br>
+    <a href="/" class="back">戻る</a>
+    <br><br>
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="/static/js/room.js"></script>
-    </body>
-</html>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/static/js/room.js"></script>
+{{ end }}

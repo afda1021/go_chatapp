@@ -13,8 +13,8 @@ func index(w http.ResponseWriter, r *http.Request) {
 	session := session(w, r) //クッキーと一致するセッションをDBから取得
 
 	if session.Id == 0 {
-		t := template.Must(template.ParseFiles("templates/index.html"))
-		t.ExecuteTemplate(w, "index.html", nil)
+		t := template.Must(template.ParseFiles("templates/layout.html", "templates/index.html"))
+		t.ExecuteTemplate(w, "layout", nil)
 	} else {
 		user := data.UserByUuid(w, r)
 		rooms := data.GetRooms() //DBからルームを取得
@@ -24,21 +24,21 @@ func index(w http.ResponseWriter, r *http.Request) {
 		}
 		data := Data{User: user, Rooms: rooms} //構造体dataにuserとroonsを格納
 
-		t := template.Must(template.ParseFiles("templates/room_top.html"))
-		t.ExecuteTemplate(w, "room_top.html", data)
+		t := template.Must(template.ParseFiles("templates/layout.html", "templates/room_top.html"))
+		t.ExecuteTemplate(w, "layout", data)
 	}
 }
 
 /* 新規登録画面 */
 func signup(w http.ResponseWriter, r *http.Request) {
-	t := template.Must(template.ParseFiles("templates/signup.html"))
-	t.ExecuteTemplate(w, "signup.html", nil)
+	t := template.Must(template.ParseFiles("templates/layout.html", "templates/signup.html"))
+	t.ExecuteTemplate(w, "layout", nil)
 }
 
 /* ログイン画面 */
 func login(w http.ResponseWriter, r *http.Request) {
-	t := template.Must(template.ParseFiles("templates/login.html"))
-	t.ExecuteTemplate(w, "login.html", nil)
+	t := template.Must(template.ParseFiles("templates/layout.html", "templates/login.html"))
+	t.ExecuteTemplate(w, "layout", nil)
 }
 
 /* 新規登録処理 */
@@ -91,8 +91,8 @@ func newRoom(w http.ResponseWriter, r *http.Request) {
 	if session.Id == 0 {
 		http.Redirect(w, r, "/", 302)
 	} else {
-		t := template.Must(template.ParseFiles("templates/room_new.html"))
-		t.ExecuteTemplate(w, "room_new.html", nil)
+		t := template.Must(template.ParseFiles("templates/layout.html", "templates/room_new.html"))
+		t.ExecuteTemplate(w, "layout", nil)
 	}
 }
 
@@ -132,7 +132,7 @@ func room(w http.ResponseWriter, r *http.Request) {
 			Messages []data.Message
 		}
 		data := Data{Room: room, Name: user.Name, Messages: msgs}
-		t := template.Must(template.ParseFiles("templates/room.html"))
-		t.ExecuteTemplate(w, "room.html", data)
+		t := template.Must(template.ParseFiles("templates/layout.html", "templates/room.html"))
+		t.ExecuteTemplate(w, "layout", data)
 	}
 }

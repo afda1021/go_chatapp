@@ -1,24 +1,15 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-        <meta charset="utf-8">
-        <title>Chat</title>
-        <link href="/static/css/style.css" rel="stylesheet">
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    </head>
-    <body>
-        <div class="title">
-            <h1>Chat Room</h1>
-        </div>
-        <div class="account">
-            <p class="main-title">新規会員登録</p>
-            <p>アカウントを作成してください。</p>
-            <form action="/signup_account" method="post" class="form_account">
-                <p>ユーザー名：<input name="name" type="text" class="input"></p>
-                <p>パスワード：<input name="password" type="text" class="input"></p>
-                <input type="submit" class="w-50" value="登録">
-            </form>
-            <a href="/" class="to_top">トップへ戻る</a>
-        </div>
-    </body>
-</html>
+{{ define "content" }}
+    <div class="title">
+        <h1>Chat Room</h1>
+    </div>
+    <div class="account">
+        <p class="main-title">新規会員登録</p>
+        <p>アカウントを作成してください。</p>
+        <form action="/signup_account" method="post" class="form_account">
+            <p>ユーザー名：<input name="name" type="text" class="input"></p>
+            <p>パスワード：<input name="password" type="text" class="input"></p>
+            <input type="submit" class="w-50" value="登録">
+        </form>
+        <a href="/" class="to_top">トップへ戻る</a>
+    </div>
+{{ end }}

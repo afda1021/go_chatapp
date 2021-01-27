@@ -1,18 +1,11 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-        <meta charset="utf-8">
-        <title>Chat</title>
-    </head>
-    <body>
-        <h2>新規ルームを作成</h2>
-        <p>新規ルームを作成</p>
-        <form action="/room/create" method="post">
-            <p>ルーム名：<input name="room_name" type="text"></p>
-            <p><input type="submit" value="作成"></p>
-        </form>
-        <div>
-            <a href="/">戻る</a>
-        </div>
-    </body>
-</html>
+{{ define "content"}}
+    <h2>新規ルームを作成</h2>
+    <p>新規ルームを作成</p>
+    <form action="/room/create" method="post">
+        <p>ルーム名：<input name="room_name" type="text"></p>
+        <p><input type="submit" value="作成"></p>
+    </form>
+    <div>
+        <a href="/">戻る</a>
+    </div>
+{{ end }}

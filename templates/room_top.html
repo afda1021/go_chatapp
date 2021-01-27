@@ -1,26 +1,18 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-        <meta charset="utf-8">
-        <title>Chat</title>
-        <link href="/static/css/style.css" rel="stylesheet">
-    </head>
-    <body>
-        <div class="title">
-            <h1>Chat Room</h1>
-        </div>
-        <div class="rooms_intro">
-            <p>{{ .User.Name }}さん、チャットルームへようこそ！</p>
-            <p><a href="/room/new">ルームを作成</a>または以下のルームに参加してください。</p>
-        </div>
-        <div class="rooms">
-            {{ range .Rooms }}
-                <div>
-                    <p><a href="/room?id={{.Id}}">{{ .RoomName }}</a></p>
-                </div>
-            {{ end }}
-        </div>
-        <a href="/logout" class="logout">ログアウト</a>
-        <br><br>
-    </body>
-</html>
+{{ define "content"}}
+    <div class="title">
+        <h1>Chat Room</h1>
+    </div>
+    <div class="rooms_intro">
+        <p>{{ .User.Name }}さん、チャットルームへようこそ！</p>
+        <p><a href="/room/new">ルームを作成</a>または以下のルームに参加してください。</p>
+    </div>
+    <div class="rooms">
+        {{ range .Rooms }}
+            <div>
+                <p><a href="/room?id={{.Id}}">{{ .RoomName }}</a></p>
+            </div>
+        {{ end }}
+    </div>
+    <a href="/logout" class="logout">ログアウト</a>
+    <br><br>
+{{ end }}
