@@ -140,7 +140,7 @@ div {
     margin: auto;
 }
 .msgs .msgbox .msg{
-    margin: 0 auto 0 10%;
+    margin: 0 auto 0 15%;
     width: fit-content;
     max-width: 50%;
     /* border: solid 2px #67c5ff; */
@@ -148,7 +148,7 @@ div {
     background: #DDDDDD;
 }
 .msgs .my-msgbox .msg{
-    margin: 0 10% 0 auto;
+    margin: 0 15% 0 auto;
     width: fit-content;
     max-width: 50%;
     /* border: solid 2px #67c5ff; */
@@ -157,11 +157,11 @@ div {
 }
 .msgbox > p{
     text-align: left;
-    margin: 2em auto 0 10%;
+    margin: 2em auto 0 15%;
 }
 .my-msgbox > p{
     text-align: right;
-    margin: 2em 10% 0 auto;
+    margin: 2em 15% 0 auto;
 }
 .msg > p{
     margin: 0.2em 0.8em 0.2em 0.8em;
@@ -173,8 +173,8 @@ div {
 #chatbox > textarea{
     display: inline-block;
     float: left;
-    margin-left: 10%;
-    width: 73%;
+    margin-left: 15%;
+    width: 65%;
     line-height: 20px;
     max-height: 120px;
 }
@@ -196,4 +196,40 @@ div {
 }
 .dt-vis{
     text-align: center;
+}
+
+.msgbox{
+    position: relative;
+}
+.my-msgbox{
+    position: relative;
+}
+.menu{
+    display: inline-block;
+    padding: 0.3em 0.3em;
+    border-radius: 12px;
+    background: #e2e2e2;
+    position: absolute;
+    top: 6px;
+    right: 86%;
+}
+.my-menu{
+    display: inline-block;
+    padding: 0.3em 0.3em;
+    border-radius: 12px;
+    background: #e2e2e2;
+    position: absolute;
+    top: 6px;
+    left: 86%;
+}
+.menu-hidden{
+    display: none;
+}
+.menu-list{
+    display: block;
+    color: black;
+    font-size: small;
+    margin: 0.2em 0.2em 0.2em 0.2em;
+    border: none;
+    background: #e2e2e2;
 }

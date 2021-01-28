@@ -136,3 +136,21 @@ func room(w http.ResponseWriter, r *http.Request) {
 		t.ExecuteTemplate(w, "layout", data)
 	}
 }
+
+/* メッセージ送信取消 */
+func deleteMsg(w http.ResponseWriter, r *http.Request) {
+	session := session(w, r) //クッキーと一致するセッションを取得
+
+	if session.Id == 0 {
+		http.Redirect(w, r, "/", 302)
+	} else {
+		query := r.URL.Query()
+		id := query.Get("id")        //roomのIdを取得
+		msgId := query.Get("msg_id") //msgのIdを取得
+		// intId, _ := strconv.Atoi(id)
+		intMsgId, _ := strconv.Atoi(msgId)
+
+		data.DeleteMsg(intMsgId) //idと一致するmessageを削除
+		http.Redirect(w, r, "/room?id="+id, 302)
+	}
+}

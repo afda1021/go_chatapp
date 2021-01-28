@@ -35,3 +35,13 @@ func GetMessage(room_id int) (msgs []Message) {
 	}
 	return
 }
+
+func DeleteMsg(msgId int) (err error) {
+	db := DbInit()
+	defer db.Close()
+	//DBからidと一致するmessageを削除
+	statement := "DELETE FROM messages WHERE id = ?"
+	stmt, _ := db.Prepare(statement)
+	_, err = stmt.Exec(msgId)
+	return
+}

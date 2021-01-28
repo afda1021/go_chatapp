@@ -1,17 +1,21 @@
 {{ define "content"}}
     <div class="room-title">
         <h2>{{ .Room.RoomName }}</h2>
+        <input id="room_id" type="hidden" value="{{ .Room.Id }}">
     </div>
     <input id="name" type="hidden" value="{{ .Name }}">
     <div class="msgs">
         {{ range .Messages }}
         <input id="{{.Id}}" class="date" type="hidden" value="{{ .Date }}">
         <p id="dt-{{.Id}}" class="dt-inv">{{ .Date }}</p>
-        <div id="div-{{.Id}}" class="msgbox">
+        <div id="msgbox-{{.Id}}" class="msgbox">
             <input id="{{.Id}}" class="msg-name" type="hidden" value="{{ .Name }}">
             <p>{{ .Name }}さん -{{ .Time }}</p>
-            <div class="msg">
+            <div class="msg" onclick="menu('menu-'+'{{.Id}}')">
                 <p>{{ .Text }}</p>
+            </div>
+            <div id="menu-{{.Id}}" name="menu" class="menu menu-hidden">
+                <input type="button" class="menu-list" value="削除" onclick="delete_msg('{{.Id}}');">
             </div>
         </div>
         {{ end }}
@@ -30,5 +34,6 @@
     <br><br>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="/static/js/room.js"></script>
+    <script src="/static/js/publish.js"></script>
+    <script src="/static/js/menu.js"></script>
 {{ end }}
