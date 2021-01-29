@@ -1,5 +1,7 @@
 package data
 
+import "strconv"
+
 type Message struct {
 	Id     int
 	Name   string
@@ -7,6 +9,7 @@ type Message struct {
 	Text   string
 	Date   string
 	Time   string
+	Type   string
 }
 
 /* DBにメッセージを保存 */
@@ -19,8 +22,8 @@ func (msg *Message) CreateMessage() {
 	stmt.QueryRow(msg.Name, msg.RoomId, msg.Text, msg.Date, msg.Time)
 }
 
-/* DBからメッセージを取得 */
-func GetMessage(room_id int) (msgs []Message) {
+/* DBからルーム内の全メッセージを取得 */
+func GetMessages(room_id int) (msgs []Message) {
 	db := DbInit()
 	defer db.Close()
 	//DBからメッセージを取得
@@ -36,7 +39,20 @@ func GetMessage(room_id int) (msgs []Message) {
 	return
 }
 
-func DeleteMsg(msgId int) (err error) {
+/* DBから最新のメッセージを取得 */
+func (msg *Message) GetMessageId() {
+	db := DbInit()
+	defer db.Close()
+	//同一ルーム内で最新のメッセージidを取得
+	statement := "SELECT id FROM messages WHERE id = (SELECT max(id) FROM messages WHERE room_id = ?)"
+	stmt, _ := db.Prepare(statement)
+	defer stmt.Close()
+	room_id, _ := strconv.Atoi(msg.RoomId)
+	stmt.QueryRow(room_id).Scan(&msg.Id)
+	return
+}
+
+func RemoveMsg(msgId int) (err error) {
 	db := DbInit()
 	defer db.Close()
 	//DBからidと一致するmessageを削除

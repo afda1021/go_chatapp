@@ -124,8 +124,8 @@ func room(w http.ResponseWriter, r *http.Request) {
 
 		room := data.GetRoom(intID) //ルームidと一致するroomを取得
 		var user data.User
-		user = data.UserByUuid(w, r)   //ユーザー名を取得
-		msgs := data.GetMessage(intID) //ルームidと一致するmessageを全て取得
+		user = data.UserByUuid(w, r)    //ユーザー名を取得
+		msgs := data.GetMessages(intID) //ルームidと一致するmessageを全て取得
 		type Data struct {
 			Room     data.Room
 			Name     string
@@ -138,19 +138,19 @@ func room(w http.ResponseWriter, r *http.Request) {
 }
 
 /* メッセージ送信取消 */
-func deleteMsg(w http.ResponseWriter, r *http.Request) {
-	session := session(w, r) //クッキーと一致するセッションを取得
+// func deleteMsg(w http.ResponseWriter, r *http.Request) {
+// 	session := session(w, r) //クッキーと一致するセッションを取得
 
-	if session.Id == 0 {
-		http.Redirect(w, r, "/", 302)
-	} else {
-		query := r.URL.Query()
-		id := query.Get("id")        //roomのIdを取得
-		msgId := query.Get("msg_id") //msgのIdを取得
-		// intId, _ := strconv.Atoi(id)
-		intMsgId, _ := strconv.Atoi(msgId)
+// 	if session.Id == 0 {
+// 		http.Redirect(w, r, "/", 302)
+// 	} else {
+// 		query := r.URL.Query()
+// 		id := query.Get("id")        //roomのIdを取得
+// 		msgId := query.Get("msg_id") //msgのIdを取得
+// 		// intId, _ := strconv.Atoi(id)
+// 		intMsgId, _ := strconv.Atoi(msgId)
 
-		data.DeleteMsg(intMsgId) //idと一致するmessageを削除
-		http.Redirect(w, r, "/room?id="+id, 302)
-	}
-}
+// 		data.RemoveMsg(intMsgId) //idと一致するmessageを削除
+// 		http.Redirect(w, r, "/room?id="+id, 302)
+// 	}
+// }

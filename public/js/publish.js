@@ -44,8 +44,9 @@ document.getElementById("send").onclick = function(){
         "Name": name.val(),      // 送信者の名前
         "RoomId": roomId,      // メッセージ送信者のルームid
         "Text": msg.val(), // 入力されたメッセージ
-        "date": dateTime,
-        "time": time
+        "Date": dateTime,
+        "Time": time,
+        "Type": 'publish'
     }));
     msg.val("");
     /* textareaの高さを元に戻す */
@@ -55,34 +56,43 @@ document.getElementById("send").onclick = function(){
 };
 
 /* メッセージ受信時 */
-let id = 0;
 socket.onmessage = function(e){
-    ++id
     let msg = eval("("+e.data+")");
-    if (name.val() == msg.Name) { //自分の名前と投稿者名が一致する場合
-        messages.append(`<div id=${"msgbox"+id} class="my-msgbox"></div>`);
-        $(`#${"msgbox"+id}`).append(`<p>` + msg.Name + "さん -" + msg.Time + `</p>`);         
-        $(`#${"msgbox"+id}`).append(`<div id=${"msg"+id} class="msg" onclick="menu('${"menu"+id}')"></div>`);
-        $(`#${"msg"+id}`).append(`<p>` + msg.Text + `</p>`);
-        $(`#${"msgbox"+id}`).append(`<div id=${"menu"+id} name="menu" class="my-menu menu-hidden"></div>`);
-        $(`#${"menu"+id}`).append(`<input type="button" class="menu-list" value="削除" onclick="delete_msg('${id}');">`);
-    }else{
-        messages.append(`<div id=${"msgbox"+id} class="msgbox"></div>`);
-        $(`#${"msgbox"+id}`).append(`<p>` + msg.Name + "さん -" + msg.Time + `</p>`);         
-        $(`#${"msgbox"+id}`).append(`<div id=${"msg"+id} class="msg"></div>`);
-        $(`#${"msg"+id}`).append(`<p>` + msg.Text + `</p>`);
-        $(`#${"msgbox"+id}`).append(`<div id=${"menu"+id} name="menu" class="menu menu-hidden"></div>`);
-        $(`#${"menu"+id}`).append(`<input type="button" class="menu-list" value="削除" onclick="delete_msg('${id}');">`);
+    let id = msg.Id;
+    if (msg.Type == 'publish'){
+        if (name.val() == msg.Name) { //自分の名前と投稿者名が一致する場合
+            messages.append(`<div id=${"msgbox"+id} class="my-msgbox"></div>`);
+            $(`#${"msgbox"+id}`).append(`<p>` + msg.Name + "さん -" + msg.Time + `</p>`);
+            $(`#${"msgbox"+id}`).append(`<div id=${"msg"+id} class="msg" onclick="menu('${id}')"></div>`);
+            $(`#${"msg"+id}`).append(`<p>` + msg.Text + `</p>`);
+            $(`#${"msgbox"+id}`).append(`<div id=${"menu"+id} name="menu" class="my-menu menu-hidden"></div>`);
+            $(`#${"menu"+id}`).append(`<input type="button" class="menu-list" value="送信取消" onclick="remove_msg('${id}');">`);
+            $(`#${"menu"+id}`).append(`<input type="button" class="menu-list" value="リプライ" onclick="">`);
+        }else{
+            messages.append(`<div id=${"msgbox"+id} class="msgbox"></div>`);
+            $(`#${"msgbox"+id}`).append(`<p>` + msg.Name + "さん -" + msg.Time + `</p>`);     
+            $(`#${"msgbox"+id}`).append(`<div id=${"msg"+id} class="msg" onclick="menu('${id}')"></div>`);
+            $(`#${"msg"+id}`).append(`<p>` + msg.Text + `</p>`);
+            $(`#${"msgbox"+id}`).append(`<div id=${"menu"+id} name="menu" class="menu menu-hidden"></div>`);
+            $(`#${"menu"+id}`).append(`<input type="button" class="menu-list" value="リプライ" onclick="">`);
+        }
+    }else if (msg.Type == 'remove'){
+        if (document.getElementById("msgbox"+id) == null){ //DB表示の場合
+            location.reload() //ページを更新
+        }else{ //リアルタイム表示の場合
+            $(`#${"msgbox"+id}`).remove();
+        }
     }
 }
+
 /* 自分と相手でメッセージ表示を変える */
 let msgsData = document.querySelectorAll(".msg-name");
 
 for (let i=0; i<msgsData.length; i++){
     if (name.val() == msgsData[i].value) {
         let msgId = msgsData[i].id; //名前と投稿者名が一致するid
-        let divId = document.getElementById("msgbox-"+msgId);
-        let menuId = document.getElementById("menu-"+msgId);
+        let divId = document.getElementById("msgbox"+msgId);
+        let menuId = document.getElementById("menu"+msgId);
         divId.classList.remove("msgbox");
         divId.classList.add("my-msgbox");
         menuId.classList.remove("menu");

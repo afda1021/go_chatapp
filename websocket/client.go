@@ -2,7 +2,6 @@ package socket
 
 import (
 	"chat/data"
-	"fmt"
 
 	"github.com/gorilla/websocket"
 )
@@ -19,9 +18,14 @@ func (c *client) read() {
 	for {
 		var msg *data.Message
 		if err := c.socket.ReadJSON(&msg); err == nil {
-			fmt.Println(msg.Date)
-			msg.CreateMessage() //DBにメッセージを保存
-			c.room.forward <- msg
+			if msg.Type == "publish" { //新規メッセージ受信
+				msg.CreateMessage() //DBにメッセージを保存
+				msg.GetMessageId()  //保存したメッセージのidを取得
+				c.room.forward <- msg
+			} else if msg.Type == "remove" { //送信取り消し
+				data.RemoveMsg(msg.Id) //DBからmessageを削除
+				c.room.forward <- msg
+			}
 		} else {
 			break
 		}

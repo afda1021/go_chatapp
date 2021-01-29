@@ -8,14 +8,15 @@
         {{ range .Messages }}
         <input id="{{.Id}}" class="date" type="hidden" value="{{ .Date }}">
         <p id="dt-{{.Id}}" class="dt-inv">{{ .Date }}</p>
-        <div id="msgbox-{{.Id}}" class="msgbox">
+        <div id="msgbox{{.Id}}" class="msgbox">
             <input id="{{.Id}}" class="msg-name" type="hidden" value="{{ .Name }}">
             <p>{{ .Name }}さん -{{ .Time }}</p>
-            <div class="msg" onclick="menu('menu-'+'{{.Id}}')">
+            <div class="msg" onclick="menu('{{.Id}}')">
                 <p>{{ .Text }}</p>
             </div>
-            <div id="menu-{{.Id}}" name="menu" class="menu menu-hidden">
-                <input type="button" class="menu-list" value="削除" onclick="delete_msg('{{.Id}}');">
+            <div id="menu{{.Id}}" name="menu" class="menu menu-hidden">
+                <input type="button" class="menu-list" value="送信取消" id="remove_msg{{.Id}}" onclick="remove_msg('{{.Id}}');">
+                <input type="button" class="menu-list" value="リプライ" onclick="">
             </div>
         </div>
         {{ end }}

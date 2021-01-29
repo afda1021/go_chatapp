@@ -146,6 +146,7 @@ div {
     /* border: solid 2px #67c5ff; */
     border-radius: 5px;
     background: #DDDDDD;
+    cursor: pointer;
 }
 .msgs .my-msgbox .msg{
     margin: 0 15% 0 auto;
@@ -154,6 +155,7 @@ div {
     /* border: solid 2px #67c5ff; */
     border-radius: 5px;
     background: #92D5FF;
+    cursor: pointer;
 }
 .msgbox > p{
     text-align: left;
@@ -232,4 +234,5 @@ div {
     margin: 0.2em 0.2em 0.2em 0.2em;
     border: none;
     background: #e2e2e2;
+    cursor: pointer;
 }
