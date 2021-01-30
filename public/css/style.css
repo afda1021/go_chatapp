@@ -131,13 +131,22 @@ div {
 
 /* チャットルーム画面（room.html）に関する設定 */
 .room-title{
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    top: 0;
+    margin-top: 0px;
+    /* height: 60px; */
     text-align: center;
     font-family: serif;
     background-color: #EEEEEE;
 }
 
 .msgs{
-    margin: auto;
+    /* margin: auto; */
+    margin-top: 80px;
+    margin-bottom: 120px;
+    /* border: solid; */
 }
 .msgs .msgbox .msg{
     margin: 0 auto 0 15%;
@@ -172,6 +181,16 @@ div {
     word-wrap: break-word;
 }
 
+#chatbox{
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    bottom: 0;
+    margin-bottom: 0;
+    background-color: white;
+    padding: 10px 0 60px 0;
+    /* border: solid; */
+}
 #chatbox > textarea{
     display: inline-block;
     float: left;
@@ -184,12 +203,11 @@ div {
     display: inline-block;
     float: left;
 }
-#send:after{
-    clear: left;
-}
 .back{
-    margin-top: 20px;
-    margin-left: 84%;
+    margin-left: 10px;
+}
+.back::after{
+    clear: both;
 }
 
 .dt-inv{
@@ -235,4 +253,9 @@ div {
     border: none;
     background: #e2e2e2;
     cursor: pointer;
+}
+/* リプライ */
+.reply{
+    /* margin: 0 15% 0 15%; */
+    border: solid;
 }

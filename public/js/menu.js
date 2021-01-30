@@ -21,15 +21,22 @@ function menu(id){
 }
 
 /* メッセージ送信取消 */
-function remove_msg(msg_id){
+function remove_msg(id){
     let room_id = $("#room_id").val();
     let result = confirm('送信を取り消しますか？');
     if (result) {
         // location.href = '/delete_msg?id='+ room_id +'&msg_id=' + msg_id;
         socket.send(JSON.stringify({
-            "Id": Number(msg_id),
+            "Id": Number(id),
             "RoomId": room_id,
             "Type": 'remove'
         }));
     }
+}
+
+/* リプライ */
+function reply(msg_id){
+    // let replyId = document.getElementById("reply"+msg_id);
+    // replyId.classList.toggleClass("menu-hidden");
+    $(`#${"reply"+msg_id}`).toggleClass("menu-hidden");
 }
