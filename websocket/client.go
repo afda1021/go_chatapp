@@ -18,7 +18,7 @@ func (c *client) read() {
 	for {
 		var msg *data.Message
 		if err := c.socket.ReadJSON(&msg); err == nil {
-			if msg.Type == "publish" { //新規メッセージ受信
+			if msg.Type == "publish" || msg.Type == "reply" { //新規メッセージ受信
 				msg.CreateMessage() //DBにメッセージを保存
 				msg.GetMessageId()  //保存したメッセージのidを取得
 				c.room.forward <- msg

@@ -148,7 +148,7 @@ div {
     margin-bottom: 120px;
     /* border: solid; */
 }
-.msgs .msgbox .msg{
+.msgbox .msg{
     margin: 0 auto 0 15%;
     width: fit-content;
     max-width: 50%;
@@ -157,7 +157,7 @@ div {
     background: #DDDDDD;
     cursor: pointer;
 }
-.msgs .my-msgbox .msg{
+.my-msgbox .msg{
     margin: 0 15% 0 auto;
     width: fit-content;
     max-width: 50%;
@@ -168,11 +168,11 @@ div {
 }
 .msgbox > p{
     text-align: left;
-    margin: 2em auto 0 15%;
+    margin: 0 auto 0 15%;
 }
 .my-msgbox > p{
     text-align: right;
-    margin: 2em 15% 0 auto;
+    margin: 0 15% 0 auto;
 }
 .msg > p{
     margin: 0.2em 0.8em 0.2em 0.8em;
@@ -189,7 +189,6 @@ div {
     margin-bottom: 0;
     background-color: white;
     padding: 10px 0 60px 0;
-    /* border: solid; */
 }
 #chatbox > textarea{
     display: inline-block;
@@ -199,10 +198,7 @@ div {
     line-height: 20px;
     max-height: 120px;
 }
-#send{
-    display: inline-block;
-    float: left;
-}
+
 .back{
     margin-left: 10px;
 }
@@ -211,19 +207,27 @@ div {
 }
 
 .dt-inv{
-    visibility: hidden;
-    height: 0;
+    /* visibility: hidden; */
+    /* height: 0; */
+    display: none;
 }
 .dt-vis{
     text-align: center;
 }
 
+.msg-outbox{
+    /* border: solid 1px; */
+    margin: 0 0 0 0;
+}
 .msgbox{
     position: relative;
+    /* border: solid; */
 }
 .my-msgbox{
     position: relative;
+    /* border: solid; */
 }
+
 .menu{
     display: inline-block;
     padding: 0.3em 0.3em;
@@ -256,6 +260,17 @@ div {
 }
 /* リプライ */
 .reply{
-    /* margin: 0 15% 0 15%; */
-    border: solid;
+    margin: 0 15% 0 15%;
+    border: solid 2px;
+    border-radius: 5px;
+}
+.reply-btn{
+    margin: -6px auto -8px 15%;
+    width: fit-content;
+    cursor: pointer;
+}
+.my-reply-btn{
+    margin: -6px 15% -8px auto;
+    width: fit-content;
+    cursor: pointer;
 }

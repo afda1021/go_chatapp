@@ -4,41 +4,65 @@
         <input id="room_id" type="hidden" value="{{ .Room.Id }}">
     </div>
     <input id="name" type="hidden" value="{{ .Name }}">
-    <div class="msgs">
-        {{ range .Messages }}
-        <input id="{{.Id}}" class="date" type="hidden" value="{{ .Date }}">
-        <p id="dt-{{.Id}}" class="dt-inv">{{ .Date }}</p>
-        <div id="msgbox{{.Id}}" class="msgbox">
-            <input id="{{.Id}}" class="msg-name" type="hidden" value="{{ .Name }}">
-            <p>{{ .Name }}さん -{{ .Time }}</p>
-            <div class="msg" onclick="menu('{{.Id}}')">
-                <p>{{ .Text }}</p>
+    <div id="msgs" class="msgs">
+        <!-- スレッド履歴 -->
+        {{ range .Threads }}
+            <div class="msg-outbox">
+                <input id="{{.Id}}" class="date" type="hidden" value="{{ .Date }}">
+                <p id="dt-{{.Id}}" class="dt-inv">{{ .Date }}</p>
+                <div id="msgbox{{.Id}}" class="msgbox">
+                    <input id="{{.Id}}" class="msg-name" type="hidden" value="{{ .Name }}">
+                    <p>{{ .Name }} <small>-{{ .Time }}</small></p>
+                    <div class="msg" onclick="menu('{{.Id}}')">
+                        <p>{{ .Text }}</p>
+                    </div>
+                    {{ if .ReplyMsgs}}
+                        <div id="reply-btn{{.Id}}" class="reply-btn" onclick="reply('{{.Id}}');"><small>↪︎返信</small></div>
+                    {{ end }}
+                    <!-- メニューを表示 -->
+                    <div id="menu{{.Id}}" name="menu" class="menu menu-hidden">
+                        <input type="button" class="menu-list" value="送信取消" id="remove_msg{{.Id}}" onclick="remove_msg('{{.Id}}');">
+                        <input type="button" class="menu-list" value="リプライ" onclick="reply('{{.Id}}');">
+                    </div>
+                </div>
+            
+                <!-- リプライ履歴 -->
+                <div id="reply{{.Id}}" class="reply menu-hidden">
+                    {{ range .ReplyMsgs }}
+                        <div class="msg-outbox">
+                            <input id="{{.Id}}" class="date" type="hidden" value="{{ .Date }}">
+                            <p id="dt-{{.Id}}" class="dt-inv">{{ .Date }}</p>
+                            <div id="msgbox{{.Id}}" class="msgbox">
+                                <input id="{{.Id}}" class="msg-name" type="hidden" value="{{ .Name }}">
+                                <p>{{ .Name }} <small>-{{ .Time }}</small></p>
+                                <div class="msg" onclick="menu('{{.Id}}')">
+                                    <p>{{ .Text }}</p>
+                                </div>
+                                <!-- メニューを表示 -->
+                                <div id="menu{{.Id}}" name="menu" class="menu menu-hidden">
+                                    <input type="button" class="menu-list" value="送信取消" id="remove_msg{{.Id}}" onclick="remove_msg('{{.Id}}');">
+                                </div>
+                            </div>
+                        </div>
+                    {{ end }}
+                    <!-- ここに新規リプライ文を表示 -->
+                </div>
             </div>
-            <!-- メニューを表示 -->
-            <div id="menu{{.Id}}" name="menu" class="menu menu-hidden">
-                <input type="button" class="menu-list" value="送信取消" id="remove_msg{{.Id}}" onclick="remove_msg('{{.Id}}');">
-                <input type="button" class="menu-list" value="リプライ" onclick="reply('{{.Id}}');">
-            </div>
-        </div>
-        <!-- リプライ文を表示 -->
-        <div id="reply{{.Id}}" class="reply menu-hidden">
-            <p>a</p>
-        </div>
         {{ end }}
-
-        <div id="msgs">
-            <!--ここに新規messageを表示-->
-        </div>
+        <!--ここに新規スレッドを表示-->
     </div>
 
     <!--formはクエリを再指定すると接続が途切れるので使用不可-->
     <div id="chatbox">
         <textarea rows="1"></textarea>
-        <input id="send" type="button" value="送信">
+        <input id="send" class="" type="button" value="送信">
+        <input id="reply" class="menu-hidden" type="button" value="返信">
         <a href="/" class="back">戻る</a>
     </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/static/js/index.js"></script>
     <script src="/static/js/publish.js"></script>
     <script src="/static/js/menu.js"></script>
+    <script src="/static/js/reply.js"></script>
 {{ end }}

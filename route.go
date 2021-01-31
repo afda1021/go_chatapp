@@ -124,14 +124,15 @@ func room(w http.ResponseWriter, r *http.Request) {
 
 		room := data.GetRoom(intID) //ルームidと一致するroomを取得
 		var user data.User
-		user = data.UserByUuid(w, r)    //ユーザー名を取得
-		msgs := data.GetMessages(intID) //ルームidと一致するmessageを全て取得
+		user = data.UserByUuid(w, r)       //ユーザー名を取得
+		threads := data.GetMessages(intID) //ルームidと一致するmessageを全て取得
+
 		type Data struct {
-			Room     data.Room
-			Name     string
-			Messages []data.Message
+			Room    data.Room
+			Name    string
+			Threads []data.Thread
 		}
-		data := Data{Room: room, Name: user.Name, Messages: msgs}
+		data := Data{Room: room, Name: user.Name, Threads: threads}
 		t := template.Must(template.ParseFiles("templates/layout.html", "templates/room.html"))
 		t.ExecuteTemplate(w, "layout", data)
 	}

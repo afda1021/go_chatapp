@@ -36,7 +36,11 @@ function remove_msg(id){
 
 /* リプライ */
 function reply(msg_id){
-    // let replyId = document.getElementById("reply"+msg_id);
-    // replyId.classList.toggleClass("menu-hidden");
     $(`#${"reply"+msg_id}`).toggleClass("menu-hidden");
+    $("#send").toggleClass("menu-hidden");
+    $("#reply").toggleClass("menu-hidden");
+    /* 返信ボタン押下時 */
+    document.getElementById("reply").onclick = function(){
+        replyButton(msg_id);
+    };
 }
