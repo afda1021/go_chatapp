@@ -44,7 +44,6 @@ socket.onmessage = function(e){
         }
     }else if (msg.Type == 'reply'){
         let reply = $(`#${"reply"+msg.ReplyId}`); // reply表示スペース
-        console.log(id);
         if (name.val() == msg.Name) { //自分の名前と投稿者名が一致する場合
             reply.append(`<div id=${"msg-outbox"+id} class="msg-outbox"></div>`);
             $(`#${"msg-outbox"+id}`).append(`<div id=${"msgbox"+id} class="my-msgbox"></div>`);
