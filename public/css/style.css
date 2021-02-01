@@ -1,117 +1,140 @@
 /* 画面全体に関する設定 */
-body {
+html, body{
+    height: 100%;
     font: 14px;
+    margin: 0;
+    /* border: solid; */
+    padding: 0;
 }
 a {
     display: inline-block;
     position: relative;
     text-decoration: none;
 }
-a::after {
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    content: '';
-    width: 100%;
-    height: 2px;
-    background: #333;
-    transform: scale(0, 1);
-    transform-origin: left top;
-    transition: transform .3s;
-}
 div {
     margin: 20px 0px;
 }
-
+footer{
+    height: 40px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    background-color: #444444;
+    z-index: 400;
+}
+footer .foot1 a{
+    float: left;
+    line-height: 40px;
+    margin-left: 5%;
+    color: #DDDDDD;
+}
+footer .foot2{
+    float: right;
+    line-height: 40px;
+    margin-right: 5%;
+    color: white;
+}
 /* index.htmlに関する設定 */
+.home{
+    margin: 0;
+    height: 92%;
+}
 .title{
-    margin: 20px;
     font-family: serif;
     position: relative;
-    padding: 1em .5rem;
+    padding: 0.1px 0.1px 0.1px 22px;
+    color: white;
+    background-color: #222222; /*336699, dddddd;*/
+    margin: 0;
 }
 .title h1{
-    text-shadow: 3px 3px 4px rgba(0,0,0,0.3);
+    position: relative;
+    padding-left: 50px;
+    margin: 10px auto 10px auto;
 }
-.title:after {
+.title h1::before,
+.title h1::after{
+    content: "□";
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 6px;
-    content: '';
-    border-radius: 3px;
-    background-image: black;
 }
+.title h1::before{
+    left:0;
+    top:-3px;
+}
+.title h1::after{
+    left: 5px;
+    top: 3px;
+    color: #A1B8D1;
+}
+
 .intro{
     text-align: center;
     font-family: serif;
     margin-top: 4em;
 }
-.intro h2{
-    font-size: 2em;
-}
 .intro h3{
-    margin-top: .7em;
-    font-size: 1.4em;
     color: rgb(104, 103, 103);
 }
 .account_info{
     text-align: center ;  
     margin: 0 auto ;
-    width: 55em;
 }
 .account_info h3{
-    text-align: center;
     color: rgb(100, 99, 99);
-    font-size: 1.4em;
-    margin-top:1em;
 }
-.home a {
+.account_info a {
     color: black;
-    font-size: 1.6em;
+    font-size: 1.2em;
     letter-spacing: 7px;
     font-weight: bold;
     padding: .4rem 1rem;
-    border: 2px solid black;
-    border-radius: 4px;
+    border: 1px solid black;
+    background-color: #eeeeee;
+    /* border-radius: 4px; */
     width: 20em;
+    /* border-left: 5px solid rgb(60, 156, 235); */
 }
 
 /* 新規登録、ログイン画面 */
+.container{
+    margin: 0;
+    height: 100%;
+    background: linear-gradient(to bottom right, #478ed4, #5bc4cc);
+}
 .account{
-    /*background-color: rgb(202, 244, 250);*/
+    background-color: white;
     text-align: center;
+    width: 400px;
+    margin: 100px auto auto auto;
 }
 .main-title{
-    margin-top: 2em;
+    padding-top: 20px;
+    /* border: solid; */
     font-size: 32px;
 }
 .form_account{
     font-family: serif;
     text-align: center;
     font-size: 25px;
-    margin-top: 40px;
+    margin-top: 20px;
     line-height: 1.5;
 }
 .form_account p input{
     font-size: 22px;
-    width: 20em;
+    width: 80%;
 }
 .w-50{
-    margin-top: 45px;
-    font-size: 22px;
-    width: 26em;
+    margin-top: 20px;
+    font-size: 18px;/*22px;*/
+    width: 80%;
     line-height: 1.25;
-    color: black;
-    background-color: white;
-    border: solid 3px #67c5ff;
-    border-radius: 8px;
+    cursor: pointer;
+    /* color: white; */
+    /* background-color: #336699; */
 }
 .to_top{
-    margin-top: 50px;
-    font-size: 1.2em;
-    margin-left: 24em;
+    margin-top: 20px;
+    margin-left: 14em;
 }
 
 /* room_top.htmlに関する設定 */
@@ -119,10 +142,20 @@ div {
     text-align: center;
 }
 .rooms{
-    margin: 0 10% 0 10%;
-    padding: 5px 20px 5px 20px;
+    margin: 0 auto 0 auto;
+    width: 600px;
+    padding: 5px 30px 5px 30px;
     background-color: #EEEEEE;
     border-radius: 10px;
+    box-shadow: 2px 2px 8px -2px gray;
+    font-family: serif;
+}
+.rooms div p{
+    padding-left: 10px;
+    /* border-bottom: solid 1px; */
+}
+.rooms div a{
+    color: black;
 }
 .logout{
     margin-left: 82%;
@@ -139,7 +172,13 @@ div {
     /* height: 60px; */
     text-align: center;
     font-family: serif;
-    background-color: #EEEEEE;
+    color: white;
+    background-color: #222222; /*f8f8f8, 006699, 336699, 444444, 333333*/
+    box-shadow: 2px 2px 8px -2px gray;
+}
+.room-title h3{
+    /* color: white; */
+    margin: 10px 0 10px 0;
 }
 
 .msgs{
@@ -154,7 +193,7 @@ div {
     max-width: 50%;
     /* border: solid 2px #67c5ff; */
     border-radius: 5px;
-    background: #DDDDDD;
+    background: #e0e0e0;
     cursor: pointer;
 }
 .my-msgbox .msg{
@@ -163,7 +202,7 @@ div {
     max-width: 50%;
     /* border: solid 2px #67c5ff; */
     border-radius: 5px;
-    background: #92D5FF;
+    background: #92D5FF;/*92D5FF, 009ceb;*/
     cursor: pointer;
 }
 .msgbox > p{
@@ -180,6 +219,9 @@ div {
     white-space: pre-wrap;
     word-wrap: break-word;
 }
+.my-msgbox .msg > p{
+    /* color: white; */
+}
 
 #chatbox{
     position: fixed;
@@ -187,8 +229,9 @@ div {
     width: 100%;
     bottom: 0;
     margin-bottom: 0;
-    background-color: white;
     padding: 10px 0 60px 0;
+    background-color: #f8f8f8; /*b6b6b6;*/
+    box-shadow: 2px 0px 8px -2px gray;
 }
 #chatbox > textarea{
     display: inline-block;
@@ -261,8 +304,9 @@ div {
 /* リプライ */
 .reply{
     margin: 0 15% 0 15%;
-    border: solid 2px;
+    border: solid 1px;
     border-radius: 5px;
+    box-shadow: 2px 2px 8px -2px gray;
 }
 .reply-btn{
     margin: -6px auto -8px 15%;
