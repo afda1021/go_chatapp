@@ -25,7 +25,7 @@ CREATE TABLE messages (
     `name` VARCHAR(100),
     `room_id` INTEGER REFERENCES rooms(id),
     `text` VARCHAR(255),
-    `date` VARCHAR(255),
-    `time` VARCHAR(255),
+    `date` date,
+    `time` time,
     `reply_id` int
 );

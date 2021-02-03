@@ -20,7 +20,7 @@ func (c *client) read() {
 		if err := c.socket.ReadJSON(&msg); err == nil {
 			if msg.Type == "publish" || msg.Type == "reply" { //新規メッセージ受信
 				msg.CreateMessage() //DBにメッセージを保存
-				msg.GetMessageId()  //保存したメッセージのidを取得
+				msg.GetMessage()    //保存したメッセージのidとdatetimeを取得
 				c.room.forward <- msg
 			} else if msg.Type == "remove" { //送信取り消し
 				data.RemoveMsg(msg.Id) //DBからmessageを削除

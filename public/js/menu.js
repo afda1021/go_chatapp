@@ -29,7 +29,6 @@ function remove_msg(id){
     let room_id = $("#room_id").val();
     let result = confirm('送信を取り消しますか？');
     if (result) {
-        // location.href = '/delete_msg?id='+ room_id +'&msg_id=' + msg_id;
         socket.send(JSON.stringify({
             "Id": Number(id),
             "RoomId": room_id,

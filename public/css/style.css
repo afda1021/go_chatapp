@@ -182,10 +182,9 @@ footer .foot2{
 }
 
 .msgs{
-    /* margin: auto; */
     margin-top: 80px;
-    margin-bottom: 120px;
-    /* border: solid; */
+    padding-bottom: 120px;
+    /* border: solid red; */
 }
 .msgbox .msg{
     margin: 0 auto 0 15%;

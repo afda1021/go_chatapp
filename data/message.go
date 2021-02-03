@@ -2,6 +2,7 @@ package data
 
 import (
 	"strconv"
+	"time"
 )
 
 type Message struct {
@@ -33,7 +34,10 @@ func (msg *Message) CreateMessage() {
 	//DBにメッセージを追加
 	statement := "INSERT INTO messages (name, room_id, text, date, time, reply_id) VALUES (?, ?, ?, ?, ?, ?)"
 	stmt, _ := db.Prepare(statement)
-	stmt.QueryRow(msg.Name, msg.RoomId, msg.Text, msg.Date, msg.Time, msg.ReplyId)
+	t := time.Now()
+	const layout1 = "2006-01-02"
+	const layout2 = "15:04:05"
+	stmt.QueryRow(msg.Name, msg.RoomId, msg.Text, t.Format(layout1), t.Format(layout2), msg.ReplyId)
 }
 
 /* DBからルーム内の全メッセージを取得 */
@@ -79,15 +83,15 @@ func GetMessages(room_id int) (threads []Thread) {
 }
 
 /* DBから最新のメッセージを取得 */
-func (msg *Message) GetMessageId() {
+func (msg *Message) GetMessage() {
 	db := DbInit()
 	defer db.Close()
 	//同一ルーム内で最新のメッセージidを取得
-	statement := "SELECT id FROM messages WHERE id = (SELECT max(id) FROM messages WHERE room_id = ?)"
+	statement := "SELECT id, date, time FROM messages WHERE id = (SELECT max(id) FROM messages WHERE room_id = ?)"
 	stmt, _ := db.Prepare(statement)
 	defer stmt.Close()
 	room_id, _ := strconv.Atoi(msg.RoomId)
-	stmt.QueryRow(room_id).Scan(&msg.Id)
+	stmt.QueryRow(room_id).Scan(&msg.Id, &msg.Date, &msg.Time)
 	return
 }
 
