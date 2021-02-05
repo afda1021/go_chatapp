@@ -54,6 +54,8 @@ func GetMessages(room_id int) (threads []Thread) {
 		var msg Message
 		// var replyMsgs []Message
 		rows.Scan(&msg.Id, &msg.Name, &msg.RoomId, &msg.Text, &msg.Date, &msg.Time, &msg.ReplyId)
+		msg.Date = msg.Date[:10]
+		msg.Time = msg.Time[:5]
 		/* スレッドとリプライを区別 */
 		if msg.ReplyId == 0 {
 			thread := Thread{
@@ -92,7 +94,7 @@ func (msg *Message) GetMessage() {
 	defer stmt.Close()
 	room_id, _ := strconv.Atoi(msg.RoomId)
 	stmt.QueryRow(room_id).Scan(&msg.Id, &msg.Date, &msg.Time)
-	return
+	msg.Time = msg.Time[:5]
 }
 
 func RemoveMsg(msgId int) (err error) {

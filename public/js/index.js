@@ -9,7 +9,7 @@ let query = (new URL(document.location)).searchParams;
 let roomId = query.get('id');
 
 /* socketの開設 */
-socket = new WebSocket("ws://localhost:8080/ws?id="+roomId);
+socket = new WebSocket("ws://" + location.host + "/ws?id="+roomId);
 
 /* メッセージ受信時 */
 socket.onmessage = function(e){

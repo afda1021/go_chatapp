@@ -2,6 +2,7 @@ package data
 
 import (
 	"database/sql"
+	"os"
 )
 
 type User struct {
@@ -23,7 +24,7 @@ type Room struct {
 
 /* DB接続 */
 func DbInit() *sql.DB {
-	db, err := sql.Open("mysql", "user1:0000@/chat")
+	db, err := sql.Open("mysql", os.Getenv("DSN")) //"user1:0000@/chat"
 	if err != nil {
 		panic(err)
 	}

@@ -1,0 +1,5 @@
+# 環境変数ファイル
+docker-compose.env
+
+# MySQLのdataファイル
+/docker/mysql/data
