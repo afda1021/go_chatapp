@@ -16,4 +16,4 @@ RUN apk add --no-cache \
 CMD ["fresh"]
 
 # 8080番ポートを公開する
-EXPOSE 8080
+# EXPOSE 8080

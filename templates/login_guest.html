@@ -1,0 +1,17 @@
+{{ define "content" }}
+    <div class="container">
+        <div class="title">
+            <h1>Chat Room</h1>
+        </div>
+        <div class="account">
+            <p class="main-title">ゲストログイン</p>
+            <p>そのままログインをクリックしてください。</p>
+            <form action="/authenticate" method="POST" class="form_account">
+                <p><input name="name" type="text" class="input" value="guest"></p>
+                <p><input name="password" type="password" class="input" value="1234"></p>
+                <input type="submit" class="send_btn" value="ログイン">
+            </form>
+            <a href="/" class="to_top">トップへ戻る</a>
+        </div>
+    </div>
+{{ end }}

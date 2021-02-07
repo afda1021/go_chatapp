@@ -14,6 +14,7 @@ func main() {
 
 	mux.HandleFunc("/signup", signup)                //新規登録画面
 	mux.HandleFunc("/login", login)                  //ログイン画面
+	mux.HandleFunc("/login_guest", loginGuest)       //ゲストログイン画面
 	mux.HandleFunc("/signup_account", signupAccount) //新規登録処理
 	mux.HandleFunc("/authenticate", authenticate)    //ログイン処理
 	mux.HandleFunc("/logout", logout)                //ログアウト処理

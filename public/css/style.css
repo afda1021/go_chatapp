@@ -79,8 +79,12 @@ footer .foot2{
     text-align: center ;  
     margin: 0 auto ;
 }
-.account_info h3{
+.account_info h4{
     color: rgb(100, 99, 99);
+    margin-bottom: 0;
+}
+.account_info p{
+    /* margin-top: 10px; */
 }
 .account_info a {
     color: black;
@@ -109,21 +113,22 @@ footer .foot2{
 }
 .main-title{
     padding-top: 20px;
+    margin-bottom: 10px;
     /* border: solid; */
-    font-size: 32px;
+    font-size: 28px;
 }
 .form_account{
     font-family: serif;
     text-align: center;
     font-size: 25px;
-    margin-top: 20px;
-    line-height: 1.5;
+    /* margin-top: 20px; */
+    /* line-height: 1.5; */
 }
 .form_account p input{
     font-size: 22px;
     width: 80%;
 }
-.w-50{
+.send_btn{
     margin-top: 20px;
     font-size: 18px;/*22px;*/
     width: 80%;

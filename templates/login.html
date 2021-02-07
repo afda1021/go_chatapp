@@ -5,10 +5,10 @@
         </div>
         <div class="account">
             <p class="main-title">ログイン</p>
-            <form action="/authenticate" method="post" class="form_account">
-                <p><input name="name" class="input" type="text" placeholder="Username"></p>
-                <p><input name="password" class="input" type="text" placeholder="Password"></p>
-                <input type="submit" class="w-50" value="ログイン">
+            <form action="/authenticate" method="POST" class="form_account">
+                <p><input name="name" type="text" class="input" placeholder="Username"></p>
+                <p><input name="password" type="password" class="input" placeholder="Password"></p>
+                <input type="submit" class="send_btn" value="ログイン">
             </form>
             <a href="/" class="to_top">トップへ戻る</a>
         </div>

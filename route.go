@@ -41,6 +41,12 @@ func login(w http.ResponseWriter, r *http.Request) {
 	t.ExecuteTemplate(w, "layout", nil)
 }
 
+/* ゲストログイン画面 */
+func loginGuest(w http.ResponseWriter, r *http.Request) {
+	t := template.Must(template.ParseFiles("templates/layout.html", "templates/login_guest.html"))
+	t.ExecuteTemplate(w, "layout", nil)
+}
+
 /* 新規登録処理 */
 func signupAccount(w http.ResponseWriter, r *http.Request) {
 	user := &data.User{

@@ -8,7 +8,7 @@ services:
     env_file:
       - docker-compose.env
     ports: # 外部公開ポート番号 : コンテナのポート番号
-      - '8081:8080'
+      - '80:8080'
     depends_on: # 対象のコンテナとリンク
       - mysql
     volumes: # マウント。コンテナのデータと、手元のデータが同期する。自動生成
@@ -22,7 +22,7 @@ services:
       - docker-compose.env
     hostname: mysql
     ports:
-      - '3000:3306'
+      - '3306:3306'
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --skip-character-set-client-handshake
     volumes:
       - ./docker/mysql/conf.d/mysql.conf:/etc/mysql/conf.d/my.cnf:cached
