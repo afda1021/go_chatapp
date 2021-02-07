@@ -73,8 +73,10 @@ func authenticate(w http.ResponseWriter, r *http.Request) {
 		session := user.CreateSession() //セッション作成
 		//クッキー作成
 		cookie := http.Cookie{
-			Name:     "_cookie",
-			Value:    session.Uuid,
+			Name:   "_cookie",
+			Value:  session.Uuid,
+			MaxAge: 60 * 60 * 6, //有効期限(秒)
+			// Expires:  time.Now().Add(1 * time.Minute),
 			HttpOnly: true,
 		}
 		http.SetCookie(w, &cookie)
