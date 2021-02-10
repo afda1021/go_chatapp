@@ -3,3 +3,6 @@ docker-compose.env
 
 # MySQLのdataファイル
 /docker/mysql/data
+
+# ゲストユーザーのアカウント情報
+config.ini

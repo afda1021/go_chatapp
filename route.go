@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	_ "github.com/go-sql-driver/mysql"
+	"gopkg.in/ini.v1"
 )
 
 func index(w http.ResponseWriter, r *http.Request) {
@@ -43,8 +44,18 @@ func login(w http.ResponseWriter, r *http.Request) {
 
 /* ゲストログイン画面 */
 func loginGuest(w http.ResponseWriter, r *http.Request) {
+	cfg, _ := ini.Load("config.ini")
+	type Data struct {
+		Name     string
+		Password string
+	}
+	data := Data{
+		Name:     cfg.Section("guest_account").Key("username").String(),
+		Password: cfg.Section("guest_account").Key("password").String(),
+	}
+
 	t := template.Must(template.ParseFiles("templates/layout.html", "templates/login_guest.html"))
-	t.ExecuteTemplate(w, "layout", nil)
+	t.ExecuteTemplate(w, "layout", data)
 }
 
 /* 新規登録処理 */
