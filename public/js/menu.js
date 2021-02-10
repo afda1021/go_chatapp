@@ -14,15 +14,6 @@ function menu(id){
         }
     }
 }
-/* 余白クリックでメニュー表示終了 */
-$(function(){
-    $('.msgs, .reply').click(function(){
-        $('.menu, .my-menu').addClass("menu-hidden");
-    });
-    $('.msg').on('click', function(e){
-        e.stopPropagation();
-    });
-});
 
 /* メッセージ送信取消 */
 function remove_msg(id){
@@ -42,25 +33,29 @@ function reply(msg_id){
     $(`#${"reply"+msg_id}`).toggleClass("menu-hidden");
     $('.reply').not(`#${"reply"+msg_id}`).addClass("menu-hidden");
     if ($(`#${"reply"+msg_id}`).attr('class').split(' ')[1] == null){
+        $("#send").addClass("menu-hidden");
+        $("#reply").removeClass("menu-hidden");
+    }else{
         $("#send").removeClass("menu-hidden");
         $("#reply").addClass("menu-hidden");
     }
-    $("#send").toggleClass("menu-hidden");
-    $("#reply").toggleClass("menu-hidden");
     /* 返信ボタン押下時 */
     document.getElementById("reply").onclick = function(){
         replyButton(msg_id);
     };
 }
-/* 余白クリックでリプライ表示終了 */
+/* 余白クリックでイベント */
 $(function(){
     $('.msgs').click(function(){
+        // メニュー表示終了
+        $('.menu, .my-menu').addClass("menu-hidden");
+        // リプライ表示終了
         $('.reply').addClass("menu-hidden");
         $("#send").removeClass("menu-hidden");
         $("#reply").addClass("menu-hidden");
     });
-    $('.reply-btn, .my-reply-btn, .reply, .menu, .my-menu').on('click', function(e){
-        console.log("ok");
+    //解除、動的な要素にもイベントを適用
+    $('.msgs').on('click', '.msg, .reply, .menu, .my-menu, .reply-btn, .my-reply-btn', function(e){
         e.stopPropagation();
     });
 });
