@@ -233,6 +233,9 @@ footer .foot2{
     /* color: white; */
 }
 
+#reply-box{
+    margin: auto 15% 0 15%;
+}
 #chatbox{
     position: fixed;
     z-index: 100;

@@ -26,6 +26,10 @@ socket.onmessage = function(e){
             $(`#${"menu"+id}`).append(`<input type="button" class="menu-list" value="送信取消" onclick="remove_msg('${id}');">`);
             $(`#${"menu"+id}`).append(`<input type="button" class="menu-list" value="リプライ" onclick="reply('${id}');">`);
             messages.append(`<div id=${"reply"+id} class="reply menu-hidden">`);
+            console.log("ok");
+            let elm = document.documentElement;
+            let bottom = elm.scrollHeight - elm.clientHeight;
+            window.scroll(0, bottom);
         }else{
             messages.append(`<div id=${"msg-outbox"+id} class="msg-outbox"></div>`);
             $(`#${"msg-outbox"+id}`).append(`<div id=${"msgbox"+id} class="msgbox"></div>`);

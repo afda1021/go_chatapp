@@ -32,9 +32,11 @@ function remove_msg(id){
 function reply(msg_id){
     $(`#${"reply"+msg_id}`).toggleClass("menu-hidden");
     $('.reply').not(`#${"reply"+msg_id}`).addClass("menu-hidden");
+    $("#reply-box").empty(); //textarea上の返信先表示を削除
     if ($(`#${"reply"+msg_id}`).attr('class').split(' ')[1] == null){
         $("#send").addClass("menu-hidden");
         $("#reply").removeClass("menu-hidden");
+        $("#reply-box").append($(`#${"msgbox"+msg_id} p`).html()); //textarea上に返信先を表示
     }else{
         $("#send").removeClass("menu-hidden");
         $("#reply").addClass("menu-hidden");
@@ -53,6 +55,8 @@ $(function(){
         $('.reply').addClass("menu-hidden");
         $("#send").removeClass("menu-hidden");
         $("#reply").addClass("menu-hidden");
+        // 返信先表示を終了
+        $("#reply-box").empty();
     });
     //解除、動的な要素にもイベントを適用
     $('.msgs').on('click', '.msg, .reply, .menu, .my-menu, .reply-btn, .my-reply-btn', function(e){
