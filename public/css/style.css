@@ -155,6 +155,9 @@ footer .foot2{
     box-shadow: 2px 2px 8px -2px gray;
     font-family: serif;
 }
+.rooms small{
+    float: right;
+}
 .rooms div p{
     padding-left: 10px;
     /* border-bottom: solid 1px; */

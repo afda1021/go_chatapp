@@ -2,6 +2,7 @@ package socket
 
 import (
 	"chat/data"
+	"strconv"
 
 	"github.com/gorilla/websocket"
 )
@@ -21,6 +22,8 @@ func (c *client) read() {
 			if msg.Type == "publish" || msg.Type == "reply" { //新規メッセージ受信
 				msg.CreateMessage() //DBにメッセージを保存
 				msg.GetMessage()    //保存したメッセージのidとdatetimeを取得
+				roomId, _ := strconv.Atoi(msg.RoomId)
+				data.UpdateRoomTime(roomId) //roomのupdate_timeを更新
 				c.room.forward <- msg
 			} else if msg.Type == "remove" { //送信取り消し
 				data.RemoveMsg(msg.Id) //DBからmessageを削除

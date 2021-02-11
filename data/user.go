@@ -3,6 +3,7 @@ package data
 import (
 	"database/sql"
 	"os"
+	"time"
 )
 
 type User struct {
@@ -18,8 +19,9 @@ type Session struct {
 }
 
 type Room struct {
-	Id       int
-	RoomName string
+	Id         int
+	RoomName   string
+	UpdateTime string
 }
 
 /* DB接続 */
@@ -78,21 +80,38 @@ func (room *Room) CreateRoom() {
 	db := DbInit()
 	defer db.Close()
 	//DBにroomを追加
-	statement := "INSERT INTO rooms(room_name) VALUES (?)"
+	statement := "INSERT INTO rooms(room_name, update_time) VALUES (?, ?)"
+	t := time.Now()
+	const layout = "2006-01-02 15:04:05"
 	stmt, _ := db.Prepare(statement)
 	defer stmt.Close()
-	stmt.QueryRow(room.RoomName)
+	stmt.QueryRow(room.RoomName, t.Format(layout))
+}
+
+/* roomのupdate_timeを更新 */
+func UpdateRoomTime(roomId int) {
+	db := DbInit()
+	defer db.Close()
+	//DBにroomを追加
+	statement := "UPDATE rooms SET update_time = ? WHERE id = ?"
+	t := time.Now()
+	const layout = "2006-01-02 15:04:05"
+	stmt, _ := db.Prepare(statement)
+	defer stmt.Close()
+	stmt.QueryRow(t.Format(layout), roomId)
 }
 
 /* DBからroomを取得 */
 func GetRooms() (rooms []Room) {
 	db := DbInit()
 	defer db.Close()
+	// var msg Message
 	//DBからroomを取得
-	rows, _ := db.Query("SELECT id, room_name FROM rooms")
+	rows, _ := db.Query("SELECT id, room_name, update_time FROM rooms")
 	for rows.Next() {
 		room := Room{}
-		rows.Scan(&room.Id, &room.RoomName)
+		rows.Scan(&room.Id, &room.RoomName, &room.UpdateTime)
+		room.UpdateTime = room.UpdateTime[:10] + " " + room.UpdateTime[11:16]
 		rooms = append(rooms, room)
 	}
 	rows.Close()

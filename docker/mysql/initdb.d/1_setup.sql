@@ -17,7 +17,8 @@ CREATE TABLE sessions (
 
 CREATE TABLE rooms (
     `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `room_name`  VARCHAR(100) NOT NULL
+    `room_name`  VARCHAR(100) NOT NULL,
+    `update_time` datetime
 );
 
 CREATE TABLE messages (
