@@ -11,7 +11,8 @@
                 <p><input name="password" type="password" class="input" value="{{.Password}}"></p>
                 <input type="submit" class="send_btn" value="ログイン">
             </form>
-            <a href="/" class="to_top">トップへ戻る</a>
+            <a href="/login_guest?account={{.Id}}" class="to_page">別のアカウントを使用</a>
+            <a href="/" class="to_page">トップへ戻る</a>
         </div>
     </div>
 {{ end }}

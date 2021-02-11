@@ -2,6 +2,7 @@ package main
 
 import (
 	"chat/data"
+	"fmt"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -46,12 +47,21 @@ func login(w http.ResponseWriter, r *http.Request) {
 func loginGuest(w http.ResponseWriter, r *http.Request) {
 	cfg, _ := ini.Load("config.ini")
 	type Data struct {
+		Id       int
 		Name     string
 		Password string
 	}
+	query := r.URL.Query()
+	id, _ := strconv.Atoi(query.Get("account")) //accountのIdを取得
+	/* 複数のアカウント */
+	account := fmt.Sprintf("guest_account%d", id)
+	if id == 2 {
+		id = 0
+	}
 	data := Data{
-		Name:     cfg.Section("guest_account").Key("username").String(),
-		Password: cfg.Section("guest_account").Key("password").String(),
+		Id:       id + 1,
+		Name:     cfg.Section(account).Key("username").String(),
+		Password: cfg.Section(account).Key("password").String(),
 	}
 
 	t := template.Must(template.ParseFiles("templates/layout.html", "templates/login_guest.html"))

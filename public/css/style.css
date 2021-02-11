@@ -141,6 +141,9 @@ footer .foot2{
     margin-top: 20px;
     margin-left: 14em;
 }
+.to_page{
+    margin: 20px 30px auto 30px;
+}
 
 /* room_top.htmlに関する設定 */
 .rooms_intro{
