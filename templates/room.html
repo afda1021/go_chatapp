@@ -1,13 +1,12 @@
 {{ define "content"}}
     <div class="title2">
         <img src="/static/img/img02_title.png">
+        <a href="/logout" class="logout">ログアウト</a>
     </div>
     <div class="wrapper">
         <div class="sidebar">
-            <div class="sidebar_item sidebar_item-fixed">
-                <p>入室中のユーザー</p>
-                <div id="user_list"></div>
-            </div>
+            <p>入室中のユーザー</p>
+            <div id="user_list"></div>
         </div>
         <div class="column">
             <div class="room-title">
@@ -81,5 +80,4 @@
     <script src="/static/js/publish.js"></script>
     <script src="/static/js/menu.js"></script>
     <script src="/static/js/reply.js"></script>
-    <script src="/static/js/utils.js"></script>
 {{ end }}

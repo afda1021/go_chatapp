@@ -18,7 +18,7 @@ socket.onmessage = function(e){
     let msg = eval("("+e.data+")");
     if (msg.Text == null){ //入室中のユーザー一覧を取得
         userList.children("p").remove();
-        userList.append(`<p>` + name.val() + `</p>`);
+        userList.append(`<p>` + name.val() + " (あなた)" + `</p>`);
         for (let i=0; i<msg.length; i++){
             if (msg[i].Name != name.val() && msg[i].RoomId == roomId){
                 console.log(msg[i],"ok");
@@ -40,9 +40,7 @@ socket.onmessage = function(e){
             $(`#${"menu"+id}`).append(`<input type="button" class="menu-list" value="リプライ" onclick="reply('${id}');">`);
             messages.append(`<div id=${"reply"+id} class="reply menu-hidden">`);
             //一番下まで自動スクロール
-            let elm = document.documentElement;
-            let bottom = elm.scrollHeight - elm.clientHeight;
-            window.scroll(0, bottom);
+            $('#msgs').animate({scrollTop: $('#msgs')[0].scrollHeight}, 'fast');
         }else{
             messages.append(`<div id=${"msg-outbox"+id} class="msg-outbox"></div>`);
             $(`#${"msg-outbox"+id}`).append(`<div id=${"msgbox"+id} class="msgbox"></div>`);
