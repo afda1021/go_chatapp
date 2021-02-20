@@ -3,17 +3,30 @@ let msg = $("#chatbox textarea");  // 入力されたメッセージ
 let name = $("#name");             // 送信者の名前(自分の名前)
 let messages = $("#msgs");         // message表示スペース
 let textarea = $('#chatbox').children("textarea");
+let userList = $("#user_list");  // 入室中のユーザー一覧
 
 /*クエリを取得*/
 let query = (new URL(document.location)).searchParams;
 let roomId = query.get('id');
 
 /* socketの開設 */
-socket = new WebSocket("ws://" + location.host + "/ws?id="+roomId);
+console.log(name.val());
+socket = new WebSocket("ws://" + location.host + "/ws?id="+roomId+"&name="+name.val());
 
 /* メッセージ受信時 */
 socket.onmessage = function(e){
     let msg = eval("("+e.data+")");
+    if (msg.Text == null){ //入室中のユーザー一覧を取得
+        userList.children("p").remove();
+        userList.append(`<p>` + name.val() + `</p>`);
+        for (let i=0; i<msg.length; i++){
+            if (msg[i].Name != name.val() && msg[i].RoomId == roomId){
+                console.log(msg[i],"ok");
+                userList.append(`<p>` + msg[i].Name + `</p>`);
+            }
+        }
+    }
+    // console.log(msg);
     let id = msg.Id;
     if (msg.Type == 'publish'){
         if (name.val() == msg.Name) { //自分の名前と投稿者名が一致する場合
@@ -26,7 +39,7 @@ socket.onmessage = function(e){
             $(`#${"menu"+id}`).append(`<input type="button" class="menu-list" value="送信取消" onclick="remove_msg('${id}');">`);
             $(`#${"menu"+id}`).append(`<input type="button" class="menu-list" value="リプライ" onclick="reply('${id}');">`);
             messages.append(`<div id=${"reply"+id} class="reply menu-hidden">`);
-            console.log("ok");
+            //一番下まで自動スクロール
             let elm = document.documentElement;
             let bottom = elm.scrollHeight - elm.clientHeight;
             window.scroll(0, bottom);

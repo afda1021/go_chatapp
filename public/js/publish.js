@@ -1,6 +1,9 @@
 /* 送信ボタン押下時 */
 document.getElementById("send").onclick = function(){
-    isNotEmpty();
+    if (msg.val() == "" || !msg.val().match(/\S/g)) {
+        alert('空欄では投稿できません');
+        return false;
+    }
     /* socketにデータを送る */
     socket.send(JSON.stringify({
         "Name": name.val(),      // 送信者の名前

@@ -40,7 +40,6 @@ footer .foot2{
     height: 92%;
 }
 .title{
-    font-family: serif;
     position: relative;
     padding: 0.1px 0.1px 0.1px 22px;
     color: white;
@@ -48,9 +47,11 @@ footer .foot2{
     margin: 0;
 }
 .title h1{
+    font-family: serif;
+    display: inline-block;
     position: relative;
     padding-left: 50px;
-    margin: 10px auto 10px auto;
+    margin: 10px auto 10px 10px;
 }
 .title h1::before,
 .title h1::after{
@@ -146,6 +147,12 @@ footer .foot2{
 }
 
 /* room_top.htmlに関する設定 */
+.logout{
+    display: inline-block;
+    float: right;
+    margin: 22px 60px 22px auto; /*height: h3=48px, a=24px*/
+    color: white;
+}
 .rooms_intro{
     text-align: center;
 }
@@ -161,35 +168,95 @@ footer .foot2{
 .rooms small{
     float: right;
 }
-.rooms div p{
+.rooms div > p{
     padding-left: 10px;
     /* border-bottom: solid 1px; */
 }
 .rooms div a{
     color: black;
-}
-.logout{
-    margin-left: 82%;
-    margin-top: 20px;
+    display: inline-block;
 }
 
 /* チャットルーム画面（room.html）に関する設定 */
+.title2{
+    position: fixed;
+    z-index: 120;
+    height: 68px;
+    top: 0;
+    margin-top: 0;
+    width: 100%;
+    background-color: #222222;
+    border-bottom: solid white 1px;
+}
+.title2 img{
+    /* position: fixed;
+    z-index: 100; */
+    height: 68px;
+    /* top: 0; */
+    color: white;
+    /* border: solid red; */
+}
 .room-title{
     position: fixed;
     z-index: 100;
-    width: 100%;
-    top: 0;
+    width: 80%;
+    top: 67px;
     margin-top: 0px;
-    /* height: 60px; */
+    height: 46px;
     text-align: center;
     font-family: serif;
-    color: white;
-    background-color: #222222; /*f8f8f8, 006699, 336699, 444444, 333333*/
+    /* color: white; */
+    background-color: #f1f1f1; /*0d4c8b, 222222, f8f8f8, 006699, 336699, 444444, 333333*/
     box-shadow: 2px 2px 8px -2px gray;
 }
-.room-title h3{
-    /* color: white; */
+.back{
+    display: inline-block;
+    height: 26px;
+    width: 4%;
     margin: 10px 0 10px 0;
+    /* border:solid 1px white; */
+}
+.back img{
+    float:left;
+    height: 22px;
+    margin: 2px auto 2px 30%;
+}
+.room-title h3{
+    float: right;
+    height: 26px;
+    width: 69%;
+    margin: 10px 15% 10px 11%;
+}
+
+.wrapper {
+    display: flex;
+}
+.sidebar{
+    width: 20%;
+    margin-top: -60px;
+}
+.column{
+    width: 80%;
+    border: double 3px #969696;
+}
+.sidebar_item-fixed {
+    position: sticky;
+    margin-bottom: 0;
+    top: 67px;
+    margin-top: 100px;
+    z-index: 1;
+    /* height: 100vh; */
+}
+.sidebar_item-fixed > p{
+    margin-top: 0;
+    padding-left: 5%;
+    height: 30px;
+    font-size: large;
+    color: white;
+    background-color: #009231;
+}
+#user_list > p{
+    padding-left: 10%;
 }
 
 .msgs{
@@ -239,11 +306,11 @@ footer .foot2{
 #chatbox{
     position: fixed;
     z-index: 100;
-    width: 100%;
+    width: 80%;
     bottom: 0;
     margin-bottom: 0;
     padding: 10px 0 60px 0;
-    background-color: #f8f8f8; /*b6b6b6;*/
+    background-color: #f1f1f1; /*f8f8f8*/
     box-shadow: 2px 0px 8px -2px gray;
 }
 #chatbox > textarea{
@@ -253,13 +320,6 @@ footer .foot2{
     width: 65%;
     line-height: 20px;
     max-height: 120px;
-}
-
-.back{
-    margin-left: 10px;
-}
-.back::after{
-    clear: both;
 }
 
 .dt-inv{

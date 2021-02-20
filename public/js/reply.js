@@ -1,5 +1,8 @@
 function replyButton(msg_id){
-    isNotEmpty();
+    if (msg.val() == "" || !msg.val().match(/\S/g)) {
+        alert('空欄では投稿できません');
+        return false;
+    }
     /* socketにデータを送る */
     socket.send(JSON.stringify({
         "Name": name.val(),      // 送信者の名前

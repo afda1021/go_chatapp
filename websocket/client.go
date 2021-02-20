@@ -2,16 +2,23 @@ package socket
 
 import (
 	"chat/data"
+	"fmt"
 	"strconv"
 
 	"github.com/gorilla/websocket"
 )
 
 type client struct {
-	roomId string
-	socket *websocket.Conn // websocketへのコネクション
-	send   chan *data.Message
-	room   *chatroom
+	name     string
+	roomId   string
+	socket   *websocket.Conn // websocketへのコネクション
+	send     chan *data.Message
+	sendUser chan []*clientUser
+	room     *chatroom
+}
+type clientUser struct {
+	Name   string
+	RoomId string
 }
 
 /* websocketに書き出されたメッセージを読み込む。*/
@@ -40,6 +47,17 @@ func (c *client) read() {
 func (c *client) write() {
 	for msg := range c.send {
 		if err := c.socket.WriteJSON(msg); err != nil {
+			break
+		}
+	}
+	c.socket.Close()
+}
+
+/* 入室中のユーザーをwebsocketに書き込む */
+func (c *client) writeUser() {
+	for clients := range c.sendUser {
+		fmt.Println(clients)
+		if err := c.socket.WriteJSON(clients); err != nil {
 			break
 		}
 	}

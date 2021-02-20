@@ -42,13 +42,16 @@ func (c *chatroom) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	query := r.URL.Query()
 	id := query.Get("id")
+	name := query.Get("name")
 
 	/* クライアントの生成 */
 	client := &client{
-		roomId: id, //ルームid(クエリ)
-		socket: socket,
-		send:   make(chan *data.Message),
-		room:   c,
+		name:     name,
+		roomId:   id, //ルームid(クエリ)
+		socket:   socket,
+		send:     make(chan *data.Message),
+		sendUser: make(chan []*clientUser),
+		room:     c,
 	}
 	// クライアントを入室させる。最後には必ず退室させる。
 	c.join <- client
@@ -56,23 +59,60 @@ func (c *chatroom) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		c.leave <- client
 	}()
 
-	go client.write() // messageの書き出し
-	client.read()     // messageの読み込み
+	go client.write()     // messageの書き出し
+	go client.writeUser() // userの書き出し
+	client.read()         // messageの読み込み
 }
 
 /* チャットルームを起動する */
 func (c *chatroom) Run() {
 	/* forwardチャネルに動きがあった場合(メッセージの受信) */
+	var clientUsers []*clientUser
 	for {
 		select {
 		/* joinチャネルに動きがあった場合(クライアントの入室) */
-		case client := <-c.join:
-			c.clients[client] = true
+		case clt := <-c.join:
+			c.clients[clt] = true
+			// 入室したユーザー
+			clientUser := &clientUser{
+				Name:   clt.name,
+				RoomId: clt.roomId,
+			}
+			fmt.Println(clt.name, "ok")
+			clientUsers = append(clientUsers, clientUser)
+			// 存在するクライアント全てに対してユーザー一覧を送信
+			for target := range c.clients {
+				select {
+				case target.sendUser <- clientUsers:
+					fmt.Println("ユーザー送信")
+				default:
+					fmt.Println("ユーザー送信に失敗")
+					delete(c.clients, target)
+				}
+			}
 			fmt.Printf("クライアント入室。現在 %x 人。\n", len(c.clients))
 
 		/* leaveチャネルに動きがあった場合(クライアントの退室) */
-		case client := <-c.leave:
-			delete(c.clients, client)
+		case clt := <-c.leave:
+			delete(c.clients, clt)
+			// 退室したユーザーを一覧から削除
+			var result []*clientUser
+			for _, clientUser := range clientUsers {
+				if clientUser.Name != clt.name {
+					result = append(result, clientUser)
+				}
+			}
+			clientUsers = result
+			// 存在するクライアント全てに対してユーザー一覧を送信
+			for target := range c.clients {
+				select {
+				case target.sendUser <- clientUsers:
+					fmt.Println("ユーザー削除")
+				default:
+					fmt.Println("ユーザー削除に失敗")
+					delete(c.clients, target)
+				}
+			}
 			fmt.Printf("クライアント退室。現在 %x 人。\n", len(c.clients))
 
 		/* forwardチャネルに動きがあった場合(メッセージの受信) */

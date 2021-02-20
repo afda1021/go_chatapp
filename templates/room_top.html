@@ -1,6 +1,7 @@
 {{ define "content"}}
     <div class="title">
         <h1>Chat Room</h1>
+        <a href="/logout" class="logout">ログアウト</a>
     </div>
     <div class="rooms_intro">
         <p>{{ .User.Name }}さん、チャットルームへようこそ！</p>
@@ -10,12 +11,11 @@
         {{ range .Rooms }}
             <div>
                 <p>
-                    <a href="/room?id={{.Id}}">{{ .RoomName }}  </a>
+                    <a href="/room?id={{.Id}}">{{ .RoomName }}</a>
                     <small>更新日時 - {{ .UpdateTime }}</small>
                 </p>
             </div>
         {{ end }}
     </div>
-    <a href="/logout" class="logout">ログアウト</a>
     <br><br>
 {{ end }}
