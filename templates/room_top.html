@@ -8,8 +8,11 @@
         <p><a href="/room/new">ルームを作成</a>または以下のルームに参加してください。</p>
     </div>
     <div class="rooms">
+        <div class="rooms-title">
+            <p>ルーム一覧</p>
+        </div>
         {{ range .Rooms }}
-            <div>
+            <div class="rooms-name">
                 <p>
                     <a href="/room?id={{.Id}}">{{ .RoomName }}</a>
                     <small>更新日時 - {{ .UpdateTime }}</small>

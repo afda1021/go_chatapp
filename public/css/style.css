@@ -161,18 +161,26 @@ footer .foot2{
     width: 600px;
     padding: 5px 30px 5px 30px;
     background-color: #EEEEEE;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     box-shadow: 2px 2px 8px -2px gray;
-    font-family: serif;
 }
-.rooms small{
+.rooms-title{
+    border-bottom: solid 1px;
+}
+.rooms-title > p{
+    font-size: large;
+    padding-left: 6px;
+    margin-bottom: 6px;
+}
+.rooms-name small{
     float: right;
 }
-.rooms div > p{
+.rooms-name > p{
     padding-left: 10px;
+    font-family: serif;
     /* border-bottom: solid 1px; */
 }
-.rooms div a{
+.rooms-name a{
     color: black;
     display: inline-block;
 }
@@ -204,7 +212,6 @@ footer .foot2{
     height: 26px;
     width: 4%;
     margin: 10px 0 10px 0;
-    /* border:solid 1px white; */
 }
 .back img{
     float:left;
@@ -377,4 +384,15 @@ footer .foot2{
     margin: -6px 15% -8px auto;
     width: fit-content;
     cursor: pointer;
+}
+
+/* room_new.htmlに関する設定 */
+.room-new{
+    margin-left: 40px;
+}
+.room-new > p{
+    font-size: 28px;
+}
+.room-new-text{
+    margin-left: 20px;
 }

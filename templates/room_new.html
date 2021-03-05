@@ -3,13 +3,17 @@
         <h1>Chat Room</h1>
         <a href="/logout" class="logout">ログアウト</a>
     </div>
-    <h2>新規ルームを作成</h2>
-    <p>新規ルームを作成</p>
-    <form action="/room/create" method="post">
-        <p>ルーム名：<input name="room_name" type="text"></p>
-        <p><input type="submit" value="作成"></p>
-    </form>
-    <div>
-        <a href="/">戻る</a>
+    <div class="room-new">
+        <p>新規ルーム作成</p>
+        <div class="room-new-text">
+            <p>新規ルームを作成してください。</p>
+            <form action="/room/create" method="post">
+                <p>
+                    ルーム名：<input name="room_name" type="text">
+                    <input type="submit" value="作成">
+                </p>
+            </form>
+            <a href="/">戻る</a>
+        </div>
     </div>
 {{ end }}
